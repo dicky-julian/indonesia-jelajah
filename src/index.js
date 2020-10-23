@@ -9,6 +9,7 @@ import './scss/style.scss';
 
 ReactDOM.render(
   <React.StrictMode>
+    <div>Root</div>
     <Provider store={store}>
       <AppRoute />
     </Provider>
