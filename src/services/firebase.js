@@ -2,10 +2,6 @@ import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 
-const auth = firebase.auth();
-const database = firebase.database();
-const storage = firebase.storage();
-
 const firebaseInitialize = {
   apiKey: "AIzaSyD-2AFd4NMDQRsF35fX0crN2jhvu7hp1kY",
   authDomain: "indonesia-jelajah.firebaseapp.com",
@@ -18,8 +14,15 @@ const firebaseInitialize = {
 
 firebase.initializeApp(firebaseInitialize);
 
+const fireAuth = firebase.auth();
+// const fireDatabase = firebase.database();
+// const fireStorage = firebase.storage();
+
+const googleFireAuth = new firebase.auth.GoogleAuthProvider();
+
 export {
-  auth,
-  database,
-  storage
+  fireAuth,
+  // fireDatabase,
+  // fireStorage,
+  googleFireAuth
 }
