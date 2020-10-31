@@ -1,0 +1,39 @@
+@media screen and (max-width: 1700px) {
+  .wrapper {
+    width: 1300px;
+  }
+
+  main {
+    > div {
+      width: 1300px;
+    }
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  .wrapper {
+    width: 90%;
+  }
+
+  main {
+    > div {
+      width: 90%;
+    }
+
+    .service-lists {
+      h5 {
+        font-size: 16px;
+      }
+
+      svg {
+        font-size: 30px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .item-carousel {
+    height: 350px;
+  }
+}

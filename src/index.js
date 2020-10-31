@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import AppRoute from './components/routes';
 import * as serviceWorker from './serviceWorker';
 import './scss/style.scss';
+import './scss/responsive.scss';
 
 ReactDOM.render(
   <AppRoute />,

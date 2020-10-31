@@ -35,10 +35,17 @@ const LandingPage = () => {
     nextArrow: <></>,
     responsive: [
       {
-        breakpoint: 1700,
+        breakpoint: 1500,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 3
+        }
+      },
+      {
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4
         }
       }
     ]
@@ -73,22 +80,22 @@ const LandingPage = () => {
             <div className="service-lists mt-3">
               <div className="mt-3">
                 <BugReportOutlined />
-                <h5>Standarisasi Pencegahan Covid</h5>
+                <h5 className="mb-0">Standarisasi Covid</h5>
               </div>
 
               <div className="mt-3">
                 <StorefrontOutlined />
-                <h5>Media Pemasaran Wisata</h5>
+                <h5 className="mb-0">Media Pemasaran Wisata</h5>
               </div>
 
               <div className="mt-3">
                 <ContactlessOutlined />
-                <h5>Pemesanan Tiket Daring</h5>
+                <h5 className="mb-0">Pemesanan Tiket Daring</h5>
               </div>
 
               <div className="mt-3">
                 <InfoOutlined />
-                <h5>Media Informasi Wisata</h5>
+                <h5 className="mb-0">Media Informasi Wisata</h5>
               </div>
             </div>
           </div>
