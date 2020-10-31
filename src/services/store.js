@@ -2,10 +2,9 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import thunk from 'redux-thunk';
-import logger from 'redux-logger';
 
 // Reducers
-import authReducer from '../components/pages/login/reducer';
+import authReducer from '../components/layouts/navbar/reducer';
 
 const reducer = combineReducers({
   // reducer lists
@@ -21,7 +20,7 @@ const persistConfig = {
 const persistreducer = persistReducer(persistConfig, reducer);
 const store = createStore(
   persistreducer,
-  applyMiddleware(thunk, logger)
+  applyMiddleware(thunk)
 );
 
 const persistor = persistStore(store);
