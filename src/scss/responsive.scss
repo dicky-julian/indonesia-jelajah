@@ -4,19 +4,31 @@
   }
 
   main {
-    > div {
+    >div {
       width: 1300px;
     }
   }
 }
 
 @media screen and (max-width: 1400px) {
+  h1 {
+    font-size: 35px;
+  }
+
+  h4 {
+    font-size: 20px;
+  }
+
+  h5 {
+    font-size: 16px;
+  }
+
   .wrapper {
     width: 90%;
   }
 
   main {
-    > div {
+    >div {
       width: 90%;
     }
   }
@@ -25,12 +37,157 @@
     height: 400px;
   }
 
-  .introduction > div.description .service-lists > div {
-    > svg {
+  .introduction>div.description .service-lists>div {
+    >svg {
       font-size: 25px;
     }
-    > h5 {
+
+    >h5 {
       font-size: 16px;
+    }
+  }
+
+  .advertise-word {
+    width: 100%;
+
+    h1,
+    h4,
+    h5 {
+      margin-left: 5%;
+    }
+
+    >.content-field {
+      margin-top: -100px;
+    }
+  }
+
+  .popular-article {
+    .content-field>div>.item-detail {
+      bottom: 110px;
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .introduction {
+    align-items: flex-start !important;
+  }
+
+  .introduction>div {
+    width: calc(50% - 20px);
+  }
+
+  .popular-article {
+    .content-field {
+      grid-gap: 15px;
+
+      >div {
+        height: 225px;
+      }
+    }
+  }
+
+  .advertise-word {
+    >.content-field> :nth-child(1) {
+      margin-top: 362px;
+    }
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  nav.navbar>.wrapper {
+    >div {
+      width: 50% !important;
+      align-items: center;
+    }
+
+    > :nth-child(2) {
+      display: none;
+    }
+
+    .btn-light-primary {
+      margin: 15px;
+    }
+  }
+
+  .toogle-nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 20px;
+    cursor: pointer;
+
+    span {
+      height: 2px;
+      width: 100%;
+      background-color: #fff;
+    }
+  }
+
+  .nav-link-drawer {
+    background-color: #ffffffc7;
+
+    >a {
+      margin: 15px;
+      display: block;
+      padding: 15px 25px;
+      color: #000;
+    }
+  }
+
+  main.main-landing>div {
+    padding-bottom: 150px;
+
+    &.introduction {
+      margin-top: -100px;
+      flex-direction: column;
+
+      >div {
+        width: 100%;
+
+        &.img {
+          display: none;
+        }
+      }
+    }
+  }
+
+  header.header-landing {
+    >div {
+      h1 {
+        font-size: 70px;
+        ;
+      }
+
+      h3 {
+        font-size: 25px;
+      }
+    }
+  }
+
+  .popular-article {
+    .content-field {
+      width: 100%;
+    }
+
+    .btn-dark-primary {
+      margin-right: 0;
+    }
+  }
+
+  .advertise-word {
+    >.content-field {
+      flex-wrap: wrap;
+      margin-top: -175px;
+
+      > :nth-child(4) {
+        display: none;
+      }
+
+      > div {
+        width: calc(33.3% - 20px);
+      }
     }
   }
 }

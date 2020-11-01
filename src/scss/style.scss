@@ -64,6 +64,7 @@ a {
 }
 
 nav.navbar {
+  padding: 0;
   > .wrapper {
     > :nth-child(1) {
       width: calc(50% - 150px);

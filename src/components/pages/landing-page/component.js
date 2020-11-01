@@ -34,6 +34,13 @@ const LandingPage = () => {
     prevArrow: <></>,
     nextArrow: <></>,
     responsive: [
+      {
+        breakpoint: 1100,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3
+        }
+      },
     ]
 
   };
