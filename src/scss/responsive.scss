@@ -10,7 +10,7 @@
   }
 }
 
-@media screen and (max-width: 1500px) {
+@media screen and (max-width: 1400px) {
   .wrapper {
     width: 90%;
   }
@@ -19,21 +19,18 @@
     > div {
       width: 90%;
     }
-
-    .service-lists {
-      h5 {
-        font-size: 16px;
-      }
-
-      svg {
-        font-size: 30px;
-      }
-    }
   }
-}
 
-@media screen and (max-width: 1200px) {
   .item-carousel {
-    height: 350px;
+    height: 400px;
+  }
+
+  .introduction > div.description .service-lists > div {
+    > svg {
+      font-size: 25px;
+    }
+    > h5 {
+      font-size: 16px;
+    }
   }
 }
