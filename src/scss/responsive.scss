@@ -62,8 +62,14 @@
   }
 
   .popular-article {
-    .content-field>div>.item-detail {
-      bottom: 110px;
+    .content-field {
+      grid-gap: 15px;
+      >div {
+        height: 250px;
+        >.item-detail {
+          bottom: 110px;
+        }
+      }
     }
   }
 }
@@ -71,20 +77,11 @@
 @media screen and (max-width: 1200px) {
   .introduction {
     align-items: flex-start !important;
+    margin-top: -100px;
   }
 
   .introduction>div {
     width: calc(50% - 20px);
-  }
-
-  .popular-article {
-    .content-field {
-      grid-gap: 15px;
-
-      >div {
-        height: 225px;
-      }
-    }
   }
 
   .advertise-word {
@@ -95,6 +92,14 @@
 }
 
 @media screen and (max-width: 1000px) {
+  nav.navbar {
+    > .wrapper {
+      .btn-light-primary {
+        display: none !important;
+      }
+    }
+  }
+
   nav.navbar>.wrapper {
     >div {
       width: 50% !important;
@@ -110,12 +115,21 @@
     }
   }
 
+  .nav-link-drawer {
+    .btn-light-primary {
+      border-radius: 5px;
+      border: 1px solid #d7d7d7;
+      width: calc(100% - 30px);
+    }
+  }
+
   .toogle-nav {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 28px;
     height: 20px;
+    margin: 25px;
     cursor: pointer;
 
     span {
@@ -140,7 +154,6 @@
     padding-bottom: 150px;
 
     &.introduction {
-      margin-top: -100px;
       flex-direction: column;
 
       >div {
@@ -190,4 +203,154 @@
       }
     }
   }
+}
+
+@media screen and (max-width: 800px) {
+  .popular-article {
+    .content-field {
+      > div {
+        > .item-detail {
+          bottom: 90px;
+        }
+      }
+      > div:nth-child(1) {
+        grid-column-start: 1;
+        grid-column-end: 5;
+      }
+      > div:nth-child(2) {
+        grid-column-start: 1;
+        grid-column-end: 3;
+      }
+      > div:nth-child(3) {
+        grid-column-start: 3;
+        grid-column-end: 5;
+      }
+      > div:nth-child(4) {
+        grid-column-start: 1;
+        grid-column-end: 5;
+      }
+      > div:nth-child(5) {
+        grid-column-start: 1;
+        grid-column-end: 3;
+      }
+      > div:nth-child(6) {
+        grid-column-start: 3;
+        grid-column-end: 5;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .introduction {
+    margin-top: 0;
+  }
+
+  .container-carousel {
+    width: calc(100% + 10px);
+    margin: 50px 0 0 -10px;
+  }
+
+  .item-carousel {
+    width: calc(100% - 10px);
+    margin-left: 10px;
+  }
+
+  .popular-article {
+    .content-field {
+      grid-gap: 10px;
+      > div {
+        > .item-detail {
+          bottom: 110px;
+        }
+      }
+    }
+  }
+  
+  .advertise-word {
+    h5 {
+      width: 90%;
+    }
+    > .content-field {
+      justify-content: center;
+      > div {
+        width: 90%;
+        div {
+          margin-bottom: 10px;
+          img {
+            height: 250px;
+            object-fit: cover;
+          }
+        }
+      }
+      > :nth-child(1) {
+        margin-top: 200px;
+      }
+      > :nth-child(2) {
+        margin-top: 0;
+      }
+      > :nth-child(4) {
+        display: block;
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  header.header-landing > div {
+    h1 {
+      font-size: 45px;
+    }
+
+    h3 {
+      margin-top: 10px;
+      font-size: 20px;
+    }
+  }
+
+  .item-carousel {
+    height: 325px;
+    >.item-detail {
+      bottom: 65px;
+  }
+  }
+
+  .introduction > div.description {
+    h5 {
+      text-align: justify;
+    }
+    .service-lists {
+      display: block;
+      > div {
+        width: 100%;
+        margin-top: 10px !important;
+        padding: 15px;
+        border: 1px solid #d7d7d7;
+        border-radius: 5px;
+      }
+    }
+  }
+
+  .popular-article {
+    .content-field {
+      > div {
+        height: 200px;
+        grid-column-start: 1 !important;
+        grid-column-end: 5 !important;
+        .item-detail {
+          bottom: 90px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 350px) {
+  h1 {
+    font-size: 25px;
+  }
+  .item-carousel {
+    height: 375px;
+}
 }

@@ -35,6 +35,10 @@ const Navbar = () => {
               <Link to="/">Beranda</Link>
               <Link to="/">Destinasi</Link>
               <Link to="/">Artikel</Link>
+              <Link to="/artikel" className="btn-light-primary d-flex">
+                <img src="https://gamequitters.com/wp-content/uploads/google-logo-transparent.png" className="mr-3" alt="google logo" />
+                <p className="mb-0">Masuk dengan Google</p>
+              </Link>
             </div>
           </Drawer>
         </div>
