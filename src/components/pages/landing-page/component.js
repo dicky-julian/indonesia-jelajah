@@ -6,10 +6,10 @@ import Slider from "react-slick";
 const LandingPage = () => {
 
   const imageStores = [
-    'https://preview.colorlib.com/theme/fantasy/img/travel/t3.jpg',
-    'https://preview.colorlib.com/theme/fantasy/img/travel/t1.jpg',
-    'https://preview.colorlib.com/theme/fantasy/img/travel/t2.jpg',
-    'https://preview.colorlib.com/theme/fantasy/img/travel/t3.jpg',
+    'https://images.pexels.com/photos/3780662/pexels-photo-3780662.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+    'https://images.pexels.com/photos/2659475/pexels-photo-2659475.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+    'https://images.pexels.com/photos/2916337/pexels-photo-2916337.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+    'https://images.pexels.com/photos/2583849/pexels-photo-2583849.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
     'https://preview.colorlib.com/theme/fantasy/img/travel/t1.jpg',
     'https://preview.colorlib.com/theme/fantasy/img/travel/t2.jpg',
   ];
@@ -75,7 +75,7 @@ const LandingPage = () => {
 
         {/* INTRODUCTION */}
         <div className="d-flex justify-content-between align-items-center introduction">
-          <div className="img" style={{ backgroundImage: 'url(https://preview.colorlib.com/theme/vacation/images/xabout.jpg.pagespeed.ic.diSXLeSU2a.webp)' }}></div>
+          <div className="img" style={{ backgroundImage: 'url(https://images.pexels.com/photos/4429298/pexels-photo-4429298.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940)' }}></div>
           <div className="description">
             <h1 className="font-playfair title">Berwisata Aman di Masa Pandemi.</h1>
             <h5 className="text-muted font-weight-light mt-4">
@@ -112,12 +112,12 @@ const LandingPage = () => {
         <div className="popular-destination">
           <h1 className="font-playfair title">Temukan Destinasi Terbaik<br />Untuk Liburanmu.</h1>
           <Slider {...settings} className="container-carousel">
-            {imageStores.map((imageUrl) => (
-              <div>
+            {imageStores.map((imageUrl, index) => (
+              <div key={index}>
                 <div className="item-carousel">
                   <img src={imageUrl} alt="" />
                   <div className="text-white position-relative item-detail">
-                    <h4 className="font-playfair mb-0">Surabaya Curr</h4>
+                    <h4 className="font-playfair mb-0">Air Terjun Plunge</h4>
                     <p>Malang, Jawa Timur</p>
                   </div>
                 </div>
@@ -130,8 +130,8 @@ const LandingPage = () => {
         <div className="popular-article">
           <h1 className="font-playfair title">Wawasan Wisata<br /> Hanya Untukmu.</h1>
           <div className="content-field">
-            {imageStore2.map((imageUrl) => (
-              <div>
+            {imageStore2.map((imageUrl, index) => (
+              <div key={index}>
                 <img src={imageUrl} alt="" />
                 <div className="text-white position-relative item-detail">
                   <h4 className="font-playfair mb-0">Artikel Menarik Hanya Untukmu Hanya Untukku</h4>
@@ -156,31 +156,31 @@ const LandingPage = () => {
           <div className="content-field">
             <div>
               <div>
-                <img src="https://preview.colorlib.com/theme/fantasy/img/places/p1.jpg" />
+                <img src="https://preview.colorlib.com/theme/fantasy/img/places/p1.jpg" alt="" />
               </div>
             </div>
 
             <div>
               <div>
-                <img src="https://preview.colorlib.com/theme/fantasy/img/places/p2.jpg" />
+                <img src="https://preview.colorlib.com/theme/fantasy/img/places/p2.jpg" alt="" />
               </div>
               <div>
-                <img src="https://preview.colorlib.com/theme/fantasy/img/places/p1.jpg" />
-              </div>
-            </div>
-
-            <div>
-              <div>
-                <img src="https://preview.colorlib.com/theme/fantasy/img/places/p4.jpg" />
-              </div>
-              <div>
-                <img src="https://preview.colorlib.com/theme/fantasy/img/places/p3.jpg" />
+                <img src="https://preview.colorlib.com/theme/fantasy/img/places/p1.jpg" alt="" />
               </div>
             </div>
 
             <div>
               <div>
-                <img src="https://preview.colorlib.com/theme/fantasy/img/places/p3.jpg" />
+                <img src="https://preview.colorlib.com/theme/fantasy/img/places/p4.jpg" alt="" />
+              </div>
+              <div>
+                <img src="https://preview.colorlib.com/theme/fantasy/img/places/p3.jpg" alt="" />
+              </div>
+            </div>
+
+            <div>
+              <div>
+                <img src="https://preview.colorlib.com/theme/fantasy/img/places/p3.jpg" alt="" />
               </div>
             </div>
           </div>

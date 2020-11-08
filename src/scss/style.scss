@@ -1,3 +1,8 @@
+// 1. GENERAL
+// 2. NAVBAR
+// 3. FOOTER
+// 4. LANDING PAGE
+
 @import "~bootstrap/scss/bootstrap";
 @import "~slick-carousel/slick/slick.css"; 
 @import "~slick-carousel/slick/slick-theme.css";
@@ -18,6 +23,7 @@ $color-primary: #8ed2d4;
   transition: .2s;
 }
 
+// GENERAL
 body {
   background-color: #fff;
 }
@@ -36,6 +42,10 @@ a {
   font-family: 'Playfair';
 }
 
+.text-fade {
+  color: #b8b8b8;
+}
+
 .btn-dark-primary {
   display: flex;
   background: #000;
@@ -52,6 +62,23 @@ a {
   }
 }
 
+.custom-react-select {
+  > div {
+    cursor: pointer;
+    border: none;
+    border-radius: 0;
+    padding: 5px;
+  }
+}
+
+.custom-react-input {
+  background-color: #fff;
+  color: #000;
+  border: none;
+  border-radius: 0;
+  padding: 11px 15px;
+}
+
 .btn-light-primary {
   @extend .btn-dark-primary;
   background: #fff;
@@ -63,6 +90,8 @@ a {
   justify-self: center;
 }
 
+
+// NAVBAR
 nav.navbar {
   padding: 0;
   > .wrapper {
@@ -76,7 +105,11 @@ nav.navbar {
       width: 300px;
       > a {
         margin: 25px;
+        padding-bottom: 15px;
         color: #fff;
+        &.active {
+          border-bottom: 1px solid #fff;
+        }
       }
     }
     > :nth-child(3) {
@@ -84,6 +117,8 @@ nav.navbar {
       justify-self: end;
     }
     .btn-light-primary {
+      border: none;
+      margin: 15px;
       font-size: 13px;
       border-radius: 5px;
       img {
@@ -93,6 +128,20 @@ nav.navbar {
   }
 }
 
+// FOOTER
+footer {
+  width: 100%;
+  height: 200px;
+  background-color: $color-primary;
+}
+
+main {
+  > div {
+    width: 1500px;
+  }
+}
+
+// LANDING PAGE
 header.header-landing {
   > div {
     top: 0;
@@ -115,13 +164,6 @@ header.header-landing {
   }
 }
 
-main {
-  > div {
-    width: 1500px;
-  }
-}
-
-// LANDING PAGE
 main.main-landing {
   margin-top: -2px;
   > div {
@@ -132,7 +174,7 @@ main.main-landing {
 // IMAGE ZOOM ANIMATION
 %img-zoom-animation {
   object-fit: cover;
-  opacity: .7;
+  opacity: .8;
   width: 100%;
   height: 100%;
   max-width: 100%;
@@ -187,6 +229,7 @@ main.main-landing {
       padding-top: calc(50% - 40px);
       height: 0;
       background-size: cover;
+      background-position: center;
     }
     &.description {
       h5 {
@@ -299,8 +342,60 @@ main.main-landing {
   }
 }
 
-footer {
-  width: 100%;
-  height: 200px;
-  background-color: $color-primary;
+// DESTINATION
+header.header-destination {
+  height: 50vh;
+  margin-top: -90px;
+  background-image: url(https://preview.colorlib.com/theme/travel/img/top-banner.jpg);
+  background-size: cover;
+  background-position: center;
+  > h1 {
+    font-size: 3.5rem;
+  }
+}
+
+main.main-destination {
+  margin-top: 70px;
+  .product-container {
+    flex-wrap: wrap;
+    width: calc(100% - 420px);
+    .product-list {
+      width: calc(50% - 15px);
+      margin-bottom: 30px;
+    }
+  }
+  .preference-bar {
+    position: sticky;
+    top: 25px;
+    padding: 30px;
+    background: #f1f9ff;
+    width: 370px;
+    height: -moz-fit-content;
+    height: fit-content;
+  }
+}
+
+// LAYOUT COMPONENT
+.product-list {
+  height: 0;
+  padding-top: 60%;
+  background-size: cover !important;
+  background-position: center !important;
+  > .product-list-description {
+    width: 100%;
+    padding: 25px;
+    background-size: 100% 200%;
+    background-image: linear-gradient(to bottom, transparent 50%, #fff 50%);
+    -webkit-transition: background-position .3s;
+    -moz-transition: background-position .3s;
+    transition: background-position .3s;
+  }
+  &:hover {
+    .product-list-description {
+      background-position: 0 100%;
+      h6:nth-child(1), h3 {
+        color: #3d3d3d !important;
+      }
+    }
+  }
 }
