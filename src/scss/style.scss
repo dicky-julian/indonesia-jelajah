@@ -2,12 +2,14 @@
 // 2. NAVBAR
 // 3. FOOTER
 // 4. LANDING PAGE
+// 5. DESTINATION
+// 6. DESTINATION DETAIL
 
 @import "~bootstrap/scss/bootstrap";
 @import "~slick-carousel/slick/slick.css"; 
 @import "~slick-carousel/slick/slick-theme.css";
 
-$color-primary: #8ed2d4;
+$color-primary:#f1f9ff;
 
 @font-face {
   font-family: 'Beyond';
@@ -26,6 +28,10 @@ $color-primary: #8ed2d4;
 // GENERAL
 body {
   background-color: #fff;
+}
+
+.bg-fade {
+  background-color: #c1c1c1;
 }
 
 a {
@@ -90,6 +96,11 @@ a {
   justify-self: center;
 }
 
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
 
 // NAVBAR
 nav.navbar {
@@ -106,7 +117,6 @@ nav.navbar {
       > a {
         margin: 25px;
         padding-bottom: 15px;
-        color: #fff;
         &.active {
           border-bottom: 1px solid #fff;
         }
@@ -118,7 +128,6 @@ nav.navbar {
     }
     .btn-light-primary {
       border: none;
-      margin: 15px;
       font-size: 13px;
       border-radius: 5px;
       img {
@@ -217,7 +226,18 @@ main.main-landing {
     bottom: 100px;
   }
   > img {
-   @extend %img-zoom-animation
+    object-fit: cover;
+    opacity: .8;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    background-size: cover;
+    background-position: center;
+  }
+  &.animation {
+    > img {
+      @extend %img-zoom-animation
+     }
   }
 }
 
@@ -355,7 +375,7 @@ header.header-destination {
 }
 
 main.main-destination {
-  margin-top: 70px;
+  margin: 70px 0;
   .product-container {
     flex-wrap: wrap;
     width: calc(100% - 420px);
@@ -372,6 +392,95 @@ main.main-destination {
     width: 370px;
     height: -moz-fit-content;
     height: fit-content;
+  }
+}
+
+// DESTINATION DETAIL
+main.container-destination-detail {
+  margin: 10px 0 70px;
+  div.header-destination-detail {
+    > div:nth-child(1) {
+      width: calc(100% - 200px);
+      > div {
+        .item-carousel {
+          width: 100%;
+          height: 527px;
+          margin-left: 0;
+          > img {
+            opacity: 1;
+            &:hover {
+              opacity: .8;
+            }
+          }
+        }
+      }
+    }
+    > div:nth-child(2) {
+      width: 190px;
+      > div {
+        .item-carousel {
+          width: 100%;
+          height: 170px;
+          margin-left: 0;
+          > img {
+            opacity: 1;
+            &:hover {
+              opacity: .8;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .covid-status {
+    width: fit-content;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #d32b7b;
+    box-shadow: 0px 4px 10px rgba(3, 18, 26, 0.15);
+    color: #fff;
+    font-size: 13px;
+    svg {
+      font-size: 18px;
+    }
+  }
+
+  .features-description {
+    > :nth-child(1) {
+      width: calc(100% - 400px);
+      p {
+        line-height: 28px;
+      }
+    }
+    > :nth-child(2) {
+      width: 350px;
+
+      .review-bar {
+        width: 100%;
+        height: fit-content;
+        position: sticky;
+        top: 25px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        padding: 15px;
+      }
+    }
+  }
+}
+
+.facility-container {
+  display: grid;
+  grid-template-columns: repeat(4, calc(25% - 7.5px));
+  grid-gap: 10px;
+}
+
+.ticket-container {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 25px;
+  > hr {
+    border-style: dashed;
   }
 }
 

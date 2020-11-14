@@ -6,6 +6,7 @@ import { Drawer } from '@material-ui/core';
 const Navbar = ({ handleLogin, handleGetAllProvince, province }) => {
   const [showDrawer, setShowDrawer] = useState();
   const [activeLink, setActiveLink] = useState();
+  const [isPrimaryNav, setIsPrimaryNav] = useState();
 
   const handleToogleDrawer = () => {
     setShowDrawer(true);
@@ -31,6 +32,13 @@ const Navbar = ({ handleLogin, handleGetAllProvince, province }) => {
   useEffect(() => {
     const { pathname } = location;
     setActiveLink(pathname);
+
+    const isPrimary = listLink.find((link) => link.path === pathname);
+    if (isPrimary) {
+      setIsPrimaryNav(true);
+    } else {
+      setIsPrimaryNav();
+    }
   }, [location]);
 
   useEffect(() => {
@@ -41,21 +49,21 @@ const Navbar = ({ handleLogin, handleGetAllProvince, province }) => {
 
   return (
     <nav className="navbar d-flex justify-content-center">
-      <div className="wrapper d-flex align-items-center">
+      <div className="wrapper d-flex align-items-center justify-content-between">
         <Link to="/">
           <img src={require('../../../assets/images/logo.webp')} alt="Indonesia Jalajah" />
         </Link>
         <div>
           {listLink.map(({ path, name }, index) => (
-            <Link to={path} key={index} className={activeLink === path ? 'active' : ''}>{name}</Link>
+            <Link to={path} key={index} style={isPrimaryNav ? { color: '#fff' } : { color: '#000' }} className={activeLink === path ? 'active' : ''}>{name}</Link>
           ))}
         </div>
         <div className="d-flex justify-content-end">
-          <button className="btn-light-primary d-flex" onClick={() => handleLogin()}>
+          <button style={!isPrimaryNav ? { border: '1px solid #dee2ee' } : {}} className="btn-light-primary d-flex" onClick={() => handleLogin()}>
             <img src="https://gamequitters.com/wp-content/uploads/google-logo-transparent.png" className="mr-3" alt="google logo" />
             <p className="mb-0">Masuk dengan Google</p>
           </button>
-          <div className="toogle-nav ml-4" onClick={() => handleToogleDrawer()}>
+          <div className="toogle-nav" onClick={() => handleToogleDrawer()}>
             <span></span>
             <span></span>
             <span></span>

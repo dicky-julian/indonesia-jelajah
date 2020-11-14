@@ -8,6 +8,7 @@ import storage from '../services/store';
 
 const LandingPage = React.lazy(() => import('./pages/landing-page'));
 const Destination = React.lazy(() => import('./pages/destinasi'));
+const DestinasiDetail = React.lazy(() => import('./pages/destinasi-detail'));
 
 const AppRoute = () => {
   const { store, persistor } = storage;
@@ -40,8 +41,9 @@ const AppRoute = () => {
             <Switch>
               <Route path="/" exact render={(props) => renderComponent(LandingPage, props)} />
               <Route path="/destinasi" exact render={(props) => renderComponent(Destination, props)} />
+              <Route path="/destinasi/id_destinasi" render={(props) => renderComponent(DestinasiDetail, props)} />
             </Switch>
-            {/* <Footer /> */}
+            <Footer />
           </Router>
         </Suspense>
       </PersistGate>

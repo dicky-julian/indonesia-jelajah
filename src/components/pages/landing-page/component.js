@@ -114,7 +114,7 @@ const LandingPage = () => {
           <Slider {...settings} className="container-carousel">
             {imageStores.map((imageUrl, index) => (
               <div key={index}>
-                <div className="item-carousel">
+                <div className="item-carousel animation">
                   <img src={imageUrl} alt="" />
                   <div className="text-white position-relative item-detail">
                     <h4 className="font-playfair mb-0">Air Terjun Plunge</h4>

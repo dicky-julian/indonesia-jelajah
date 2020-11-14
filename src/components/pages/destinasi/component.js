@@ -79,7 +79,7 @@ const Destination = ({ province }) => {
                 location="Ameeru Ahmed Magu Male’, Maldives"
                 imageUrl={destination}
                 startPrice="200.000"
-                to="/destinasi"
+                to="/destinasi/id_destinasi"
               />
             ))}
           </div>
@@ -92,11 +92,13 @@ const Destination = ({ province }) => {
                 <p className="mb-2 text-secondary">Nama Destinasi</p>
                 <input
                   className="custom-react-input w-100"
+                  placeholder="Monumen Nasional"
                 />
 
                 <p className="mt-3 mb-2 text-secondary">Harga</p>
                 <input
                   className="custom-react-input w-100"
+                  placeholder="000.000.000"
                 />
 
                 <p className="mt-3 mb-2 text-secondary">Provinsi</p>
