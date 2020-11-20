@@ -11,8 +11,7 @@ const Navbar = (props) => {
   const { handleLogin, handleRegister, handleGetAllProvince, handleShowNotification, province, accessToken, showFormRegister, showNotification, handleSignOut } = props;
 
   const [showDrawer, setShowDrawer] = useState();
-  const [showProfileMenu, setShowProfileMenu] = useState(false);
-  const [profileMenuAnchor, setProfileMenuAnchor] = useState();
+  const [profileMenuAnchor, setProfileMenuAnchor] = useState(null);
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
   const [showNotificationModal, setShowNotificationModal] = useState(false);
   const [activeLink, setActiveLink] = useState();
@@ -90,18 +89,8 @@ const Navbar = (props) => {
     handleShowNotification('');
   }
 
-  // useEffect(() => {
-  //   console.log(accessToken);
-  //   console.log(showProfileMenu);
-  // }, [])
-
   useEffect(() => {
-    if (accessToken) {
-      const _anchor = document.querySelector('.nav-action-bar');
-      if (_anchor) {
-        setProfileMenuAnchor(_anchor);
-      }
-    }
+    console.log(accessToken);
   }, [accessToken])
 
   useEffect(() => {
@@ -168,7 +157,7 @@ const Navbar = (props) => {
         {/* ACTION BAR DEKSTOP */}
         <div className="d-flex justify-content-end">
           {accessToken ?
-            <div className="d-flex nav-action-bar">
+            <div className="d-flex">
               <Link to="/cart" className={isPrimaryNav ? 'text-white' : 'text-black'}>
                 <ShoppingCartOutlined />
               </Link>
@@ -177,7 +166,7 @@ const Navbar = (props) => {
                   aria-label="more"
                   aria-controls="long-menu"
                   aria-haspopup="true"
-                  onClick={() => setShowProfileMenu(!showProfileMenu)}
+                  onClick={(event) => setProfileMenuAnchor(event.currentTarget)}
                   className="ml-4"
                 />
               </div>
@@ -185,8 +174,8 @@ const Navbar = (props) => {
                 id="long-menu"
                 anchorEl={profileMenuAnchor}
                 keepMounted
-                open={showProfileMenu}
-                onClose={() => setShowProfileMenu(false)}
+                open={Boolean(profileMenuAnchor)}
+                onClose={() => setProfileMenuAnchor(null)}
                 className="mt-5"
               >
                 <MenuItem>
@@ -214,9 +203,9 @@ const Navbar = (props) => {
 
           {/* toogle */}
           <div className="toogle-nav" onClick={() => handleToogleDrawer()}>
-            <span></span>
-            <span></span>
-            <span></span>
+            <span style={!isPrimaryNav ? { backgroundColor: '#000' } : { backgroundColor: '#fff' }}></span>
+            <span style={!isPrimaryNav ? { backgroundColor: '#000' } : { backgroundColor: '#fff' }}></span>
+            <span style={!isPrimaryNav ? { backgroundColor: '#000' } : { backgroundColor: '#fff' }}></span>
           </div>
 
           {/* content bar */}
@@ -233,6 +222,7 @@ const Navbar = (props) => {
               }
             </div>
           </Drawer>
+          <div className="profile-menu-anchor"></div>
         </div>
       </div>
 

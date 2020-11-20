@@ -27,6 +27,7 @@ const handleRegister = (userData) => async (dispatch) => {
     .then((response) => {
       const { status, data } = response;
       if (status === 200) {
+        console.log(data);
         const accessToken = generateToken(data);
         dispatch(setAuthToken(accessToken));
         dispatch(setShowFormRegistration(false));
@@ -71,7 +72,6 @@ const setAuthToken = (token) => {
 }
 
 const setShowFormRegistration = (userData) => {
-  console.log(userData);
   return {
     type: SET_SHOW_FORM_REGISTER,
     payload: {

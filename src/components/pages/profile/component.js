@@ -6,15 +6,16 @@ import { decodeToken } from '../../../helpers/jwt';
 import { getCityByProvince } from '../../../services/api/location';
 
 const Profile = (props) => {
-  const { accessToken, province, handleGetAllProvince } = props;
+  const { accessToken, province, handleGetAllProvince, history } = props;
 
   const [userAccount, setUserAccount] = useState();
   const [isSelectLoading, setIsSelectLoading] = useState();
 
+  const [displayName, setDisplayName] = useState();
   const [provinceList, setProvinceList] = useState();
-  const [selectedProvince, setSelectedProvince] = useState();
+  const [selectedProvince, setSelectedProvince] = useState(false);
   const [cityList, setCityList] = useState([]);
-  const [selectedCity, setSelectedCity] = useState();
+  const [selectedCity, setSelectedCity] = useState(false);
 
   const currencies = [
     {
@@ -35,8 +36,13 @@ const Profile = (props) => {
     },
   ];
 
+  const isDisbaleButton = userAccount && selectedProvince && selectedCity ?
+    displayName !== userAccount.displayName ||
+    selectedProvince.label !== userAccount.province.label ||
+    selectedCity.label !== userAccount.city.label
+    : false;
+
   const handleGetCityByProvince = async () => {
-    console.log(selectedProvince);
     if (selectedProvince) {
       const { value } = selectedProvince;
 
@@ -46,12 +52,13 @@ const Profile = (props) => {
             const dataKotaKabupaten = response.data.kota_kabupaten;
             const newDataKotaKabupaten = [];
             dataKotaKabupaten.map((kotaKabupaten) => {
-              const { nama } = kotaKabupaten;
+              const { id, nama } = kotaKabupaten;
               return newDataKotaKabupaten.push({
                 label: nama,
-                value: nama
+                value: id
               });
             });
+
             setCityList(newDataKotaKabupaten);
           }
         });
@@ -63,26 +70,19 @@ const Profile = (props) => {
   useEffect(() => {
     if (accessToken) {
       const tokenData = decodeToken(accessToken);
-      setUserAccount(tokenData.data);
+      setUserAccount(tokenData);
     } else {
       setUserAccount();
+      history.push('/');
     }
   }, [accessToken])
 
   // SET USER LOCATION
   useEffect(() => {
     if (userAccount) {
-      setSelectedProvince({
-        label: userAccount.province,
-        value: userAccount.province
-      });
-      setSelectedCity({
-        label: userAccount.city,
-        value: userAccount.city
-      });
-
-      // Get City By Province
-      handleGetCityByProvince();
+      setSelectedProvince(userAccount.province);
+      setSelectedCity(userAccount.city);
+      setDisplayName(userAccount.displayName);
     }
   }, [userAccount])
 
@@ -90,10 +90,10 @@ const Profile = (props) => {
   useEffect(() => {
     if (!provinceList && province) {
       const newProvinceList = [];
-      province.map(({ nama }) => {
+      province.map(({ id, nama }) => {
         return newProvinceList.push({
           label: nama,
-          value: nama
+          value: id
         });
       });
 
@@ -111,10 +111,15 @@ const Profile = (props) => {
     }
   }, [selectedProvince])
 
+  useEffect(() => {
+    console.log(selectedProvince)
+    console.log(selectedCity)
+  }, [selectedCity])
+
   return (
     <div>
       <main className="container-destination-detail d-flex flex-column align-items-center bg-white">
-        {userAccount && selectedProvince && selectedCity && provinceList && cityList ?
+        {accessToken && userAccount && provinceList && cityList && selectedProvince !== false && selectedCity !== false ?
           <div className="d-flex justify-content-between cart-container">
             <div className="preference-bar">
               <h4>Dicky Julian</h4>
@@ -163,18 +168,16 @@ const Profile = (props) => {
                   </div>
 
                   <div>
-                    <TextField
-                      error={false}
-                      label="Nama Pengguna"
-                      variant="filled"
-                      className="w-100"
-                      value="Dicky Julian Pratama"
-                      helperText=""
+
+                    <p className="mb-2 text-secondary">Nama Pengguna</p>
+                    <input
+                      className="custom-react-input w-100"
+                      defaultValue={displayName}
+                      onChange={(e) => setDisplayName(e.target.value)}
                     />
 
-                    <p className="mt-3 mb-2">Alamat Pengguna</p>
-
-                    <p className="mt-3 mb-2 text-secondary">Provinsi</p>
+                    <p className="mt-4 mb-2 font-weight-bold">Alamat Pengguna</p>
+                    <p className="mb-2 text-secondary">Provinsi</p>
                     <Select
                       className="custom-react-select"
                       classNamePrefix="select"
@@ -184,7 +187,10 @@ const Profile = (props) => {
                       isClearable={true}
                       isSearchable={true}
                       options={provinceList}
-                      onChange={(province) => setSelectedProvince(province)}
+                      onChange={(province) => {
+                        setSelectedProvince(province);
+                        setSelectedCity(null);
+                      }}
                     />
 
                     <p className="mt-3 mb-2 text-secondary">Kota/Kabupaten</p>
@@ -200,9 +206,9 @@ const Profile = (props) => {
                       onChange={(city) => setSelectedCity(city)}
                     />
 
-                    <button className="mt-3">
+                    <button className={`mt-3 ${!isDisbaleButton ? 'disable' : 'cursor-pointer'}`} disabled={!isDisbaleButton}>
                       Simpan
-                </button>
+                    </button>
                   </div>
                 </div>
               </div>

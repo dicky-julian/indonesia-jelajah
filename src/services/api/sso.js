@@ -11,7 +11,7 @@ const loginWithGoogle = () => {
         const currentUser = await getUserByUid(uid);
 
         if (currentUser.data) {
-          const token = generateToken(currentUser);
+          const token = generateToken(currentUser.data);
           resolve(setResponse(200, token));
         }
         resolve(setResponse(404, {

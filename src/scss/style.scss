@@ -47,6 +47,10 @@ html {
   cursor: pointer;
 }
 
+button.disable {
+  opacity: .5;
+}
+
 // GENERAL
 body {
   background-color: #fff;
@@ -569,7 +573,7 @@ main.container-destination-detail {
         }
       }
 
-      .custom-react-select {
+      .custom-react-select, .custom-react-input {
         border: 1px solid #a6a6a6
       }
     }
