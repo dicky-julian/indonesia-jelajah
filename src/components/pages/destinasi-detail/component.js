@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Slider from "react-slick";
-import { Star, Check, LocalParking, Restaurant, Wc, Wifi, Payment, Commute, RoomServiceOutlined, HotelOutlined, PoolOutlined, AcUnitOutlined } from '@material-ui/icons';
-import { LocalParkingIcon } from '../../layouts/icons';
+import { Button, TextField } from '@material-ui/core';
+import { Star, Check, LocalParking, Restaurant, Wc, Wifi, Payment, SearchOutlined, Commute, RoomServiceOutlined, HotelOutlined, PoolOutlined, AcUnitOutlined } from '@material-ui/icons';
+import Modal from '../../layouts/base/modal';
 
 const DestinasiDetail = () => {
+  const [showTransactionModal, setShowTransactionModal] = useState(false);
   const mainSliderOptions = {
     dots: true,
     infinite: true,
@@ -89,7 +91,7 @@ const DestinasiDetail = () => {
               <h6 className="text-secondary font-weight-normal mb-0">Mulai dari</h6>
               <h4 className="text-primary mb-0">Rp 1.000.000</h4>
               <h6 className="text-secondary font-weight-normal" style={{ fontSize: "13px" }}>per orang</h6>
-              <a className="btn btn-primary pl-4 pr-4 mt-1" style={{ borderRadius: "30px" }} href="#pesan-tiket">Pesan Tiket</a>
+              <a className="btn btn-primary pl-4 pr-4 mt-1" style={{ borderRadius: "30px" }} href="#pesan-tiket">Beli Tiket</a>
             </div>
           </div>
           <hr />
@@ -128,20 +130,18 @@ const DestinasiDetail = () => {
               <h5 id="pesan-tiket">Daftar Harga Layanan</h5>
               <div className="ticket-container mt-3">
                 <h5>Ini Adalah Title Ticket</h5>
-                <p className="text-secondary mb-0">Total 1 tiket untuk 1 orang</p>
-                <p>Ini adalah deskripsi singkat dari ticket yang dimaksudkan</p>
+                <p className="text-secondary mb-0">Ini adalah deskripsi singkat dari ticket yang dimaksudkan</p>
                 <hr />
                 <div className="d-flex justify-content-between">
                   <h5>Rp. 250.000</h5>
-                  <button className="btn btn-primary mw-100" style={{ borderRadius: "30px" }} >
+                  <button className="btn btn-primary mw-100" style={{ borderRadius: "30px" }} onClick={() => setShowTransactionModal(true)}>
                     Beli Tiket
                     </button>
                 </div>
               </div>
               <div className="ticket-container mt-3">
                 <h5>Ini Adalah Title Ticket</h5>
-                <p className="text-secondary mb-0">Total 1 tiket untuk 1 orang</p>
-                <p>Ini adalah deskripsi singkat dari ticket yang dimaksudkan</p>
+                <p className="text-secondary mb-0">Ini adalah deskripsi singkat dari ticket yang dimaksudkan</p>
                 <hr />
                 <div className="d-flex justify-content-between">
                   <h5>Rp. 250.000</h5>
@@ -231,8 +231,43 @@ const DestinasiDetail = () => {
             </div>
           </div>
         </div>
+
+        <Modal
+          showModal={showTransactionModal}
+          setShowModal={setShowTransactionModal}
+          footerStyle={{ backgroundColor: '#f1f9ff' }}
+          closeTitle="Batal"
+          submitTitle="Beli Tiket"
+          submitAction={() => alert('BELI')}
+        >
+          <div className="preference-bar">
+            <h4 className="font-playfair">Detail Pesanan</h4>
+            <hr />
+
+            <p className="mb-2 text-secondary">Jumlah Tiket</p>
+            <input
+              className="custom-react-input w-100"
+              placeholder="1234"
+              type="number"
+
+            />
+
+            <p className="mt-3 mb-2 text-secondary">Nama Pesanan</p>
+            <div className="custom-react-input w-100 pt-2 pb-2">
+              <TextField
+                id="date"
+                type="date"
+                defaultValue="2017-05-24"
+                className="w-100"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </div>
+          </div>
+        </Modal>
       </main>
-    </div>
+    </div >
   )
 }
 

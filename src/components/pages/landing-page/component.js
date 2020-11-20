@@ -77,7 +77,7 @@ const LandingPage = () => {
         <div className="d-flex justify-content-between align-items-center introduction">
           <div className="img" style={{ backgroundImage: 'url(https://images.pexels.com/photos/4429298/pexels-photo-4429298.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940)' }}></div>
           <div className="description">
-            <h1 className="font-playfair title">Berwisata Aman di Masa Pandemi.</h1>
+            <h1 className="font-playfair">Berwisata Aman di Masa Pandemi.</h1>
             <h5 className="text-muted font-weight-light mt-4">
               Industri pariwisata tengah terkena dampak besar akibat Pandemi COVID-19. Banyak pelaku pariwisata yang terpaksa mundur karena pandemi. Melihat semua ini, kita perlu bergerak bersama untuk kembali bangkit dan memutar kembali roda perekonomian.
             </h5>
@@ -110,7 +110,7 @@ const LandingPage = () => {
 
         {/* DESTINASI POPULAR */}
         <div className="popular-destination">
-          <h1 className="font-playfair title">Temukan Destinasi Terbaik<br />Untuk Liburanmu.</h1>
+          <h1 className="font-playfair">Temukan Destinasi Terbaik<br />Untuk Liburanmu.</h1>
           <Slider {...settings} className="container-carousel">
             {imageStores.map((imageUrl, index) => (
               <div key={index}>
@@ -128,7 +128,7 @@ const LandingPage = () => {
 
         {/* BLOG */}
         <div className="popular-article">
-          <h1 className="font-playfair title">Wawasan Wisata<br /> Hanya Untukmu.</h1>
+          <h1 className="font-playfair">Wawasan Wisata<br /> Hanya Untukmu.</h1>
           <div className="content-field">
             {imageStore2.map((imageUrl, index) => (
               <div key={index}>
@@ -148,7 +148,7 @@ const LandingPage = () => {
 
         {/* ADVERTISE WORD */}
         <div className="advertise-word">
-          <h1 className="font-playfair title">Ciptakan Kisahmu</h1>
+          <h1 className="font-playfair">Ciptakan Kisahmu</h1>
           <h4 className="mt-1 font-beyond">#DiIndonesiaAja</h4>
           <h5 className="text-muted font-weight-light mt-4">
             There is a moment in the life of any aspiring astronomer that it is time to buy that first telescope. It’s exciting to think about setting up your own viewing station.

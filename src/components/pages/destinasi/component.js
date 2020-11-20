@@ -26,7 +26,6 @@ const Destination = ({ province }) => {
     await getCityByProvince(value)
       .then((response) => {
         if (response.data) {
-          console.log(response);
           const dataKotaKabupaten = response.data.kota_kabupaten;
           const newDataKotaKabupaten = [];
           dataKotaKabupaten.map((kotaKabupaten) => {
@@ -66,7 +65,6 @@ const Destination = ({ province }) => {
   return (
     <div>
       <header className="header-destination d-flex justify-content-center align-items-center">
-        <div></div>
         <h1 className="font-beyond text-white">Destinasi</h1>
       </header>
       <main className="main-destination d-flex flex-column align-items-center bg-white">

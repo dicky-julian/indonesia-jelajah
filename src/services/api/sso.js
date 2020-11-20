@@ -21,7 +21,6 @@ const loginWithGoogle = () => {
           photoURL
         }));
       }, (error) => {
-        console.log(error);
         reject(setResponse(500));
       });
   });

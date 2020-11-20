@@ -5,10 +5,12 @@ import thunk from 'redux-thunk';
 
 // Reducers
 import authReducer from '../components/layouts/navbar/reducer';
+import cartReducer from '../components/pages/cart/reducer';
 
 const reducer = combineReducers({
   // reducer lists
-  authReducer
+  authReducer,
+  cartReducer
 });
 
 const persistConfig = {

@@ -14,7 +14,6 @@ const getUserByUid = (uid) => {
         }
         resolve(setResponse(404));
       }, (error) => {
-        console.log(error);
         reject(setResponse(500));
       });
   });
@@ -27,7 +26,6 @@ const createUser = (userData, uid) => {
       .then(() => {
         resolve(setResponse(200, userData));
       }, (error) => {
-        console.log(error);
         reject(setResponse(500));
       });
   });

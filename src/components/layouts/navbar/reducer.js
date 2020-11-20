@@ -1,8 +1,9 @@
-import { SET_AUTH_TOKEN, SET_SHOW_FORM_REGISTER, SET_ALL_PROVINCE } from '../../../helpers/actionTypes';
+import { SET_AUTH_TOKEN, SET_SHOW_FORM_REGISTER, SET_SIGN_OUT, SET_ALL_PROVINCE, SET_SHOW_NOTIFICATION } from '../../../helpers/actionTypes';
 
 const initialState = {
   accessToken: '',
   showFormRegister: false,
+  showNotification: '',
   province: ''
 };
 
@@ -20,10 +21,22 @@ const reducer = (state = initialState, action) => {
         showFormRegister: action.payload.showFormRegister
       }
 
+    case SET_SIGN_OUT:
+      return {
+        accessToken: '',
+        showFormRegister: false,
+      }
+
     case SET_ALL_PROVINCE:
       return {
         ...state,
         province: action.payload.province
+      }
+
+    case SET_SHOW_NOTIFICATION:
+      return {
+        ...state,
+        showNotification: action.payload.showNotification
       }
 
     default:

@@ -12,7 +12,7 @@ const generateToken = (data) => {
 
 const decodeToken = (token) => {
   const tokenData = jwt_decode(token);
-  return tokenData
+  return tokenData;
 }
 
 export {
