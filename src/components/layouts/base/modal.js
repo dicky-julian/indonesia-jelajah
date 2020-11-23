@@ -27,14 +27,15 @@ const Modal = (
       <DialogContent className="p-0">
         {children}
       </DialogContent>
-      <DialogActions style={footerStyle}>
-        <Button onClick={() => setShowModal(false)} color="primary">
-          {closeTitle}
-        </Button>
-        <Button onClick={submitAction} color="primary">
-          {submitTitle}
-        </Button>
-      </DialogActions>
+      {submitTitle &&
+        <DialogActions style={footerStyle}>
+          <Button onClick={() => setShowModal(false)} color="primary">
+            {closeTitle}
+          </Button>
+          <Button onClick={submitAction} color="primary">
+            {submitTitle}
+          </Button>
+        </DialogActions>}
     </Dialog>
   )
 }

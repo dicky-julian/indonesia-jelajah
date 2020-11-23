@@ -103,5 +103,6 @@ export {
   handleRegister,
   handleSignOut,
   handleGetAllProvince,
-  handleShowNotification
+  handleShowNotification,
+  setAuthToken
 }

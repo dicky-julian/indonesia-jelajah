@@ -1,12 +1,13 @@
 import { connect } from 'react-redux';
 import Profile from './component';
-import { handleGetAllProvince } from '../../layouts/navbar/action';
+import { setAuthToken, handleGetAllProvince } from '../../layouts/navbar/action';
 
 const mapStateToProps = (state) => ({
   accessToken: state.authReducer.accessToken,
   province: state.authReducer.province
 });
 const mapDispathToProps = (dispatch) => ({
+  setAuthToken: (token) => dispatch(setAuthToken(token)),
   handleGetAllProvince: () => dispatch(handleGetAllProvince())
 });
 

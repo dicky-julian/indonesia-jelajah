@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { Drawer, Menu, MenuItem, Snackbar, IconButton } from '@material-ui/core';
+import { Drawer, Menu, MenuItem, Snackbar, IconButton, MobileStepper } from '@material-ui/core';
 import { ShoppingCartOutlined, AccountCircleOutlined, PermIdentityOutlined, ExitToAppOutlined, Close } from '@material-ui/icons';
 import Select from 'react-select';
 import { getCityByProvince } from '../../../services/api/location';
@@ -24,7 +24,11 @@ const Navbar = (props) => {
   const [selectedCity, setSelectedCity] = useState();
   const [provinceError, setProvinceError] = useState(false);
   const [cityError, setCityError] = useState(false);
+  const [fullAddressError, setFullAdressError] = useState(false);
+  const [fullAddress, setFullAddress] = useState('');
 
+  const [registrationModalStatus, setRegistrationModalStatus] = useState(0);
+  const [userRegistrationData, setUserRegistrationData] = useState({});
 
   const location = useLocation();
 
@@ -68,19 +72,38 @@ const Navbar = (props) => {
     setIsSelectLoading();
   }
 
-  const handleSubmitRegister = () => {
-    if (!selectedProvince) {
-      setProvinceError(true);
-    } else if (!selectedCity) {
-      setCityError(true);
-    } else {
-      const payload = {
-        ...showFormRegister,
-        province: selectedProvince,
-        city: selectedCity
+  const handleSubmitRegister = (payload) => {
+    const status = registrationModalStatus;
+    if (status === 0) {
+      setUserRegistrationData({
+        ...userRegistrationData,
+        role: payload.role
+      })
+      setRegistrationModalStatus(1);
+    } else if (status === 1) {
+      if (!selectedProvince) {
+        setProvinceError(true);
       }
 
-      handleRegister(payload);
+      if (!selectedCity) {
+        setCityError(true);
+      }
+
+      if (!fullAddress) {
+        setFullAdressError(true);
+      }
+
+      if (selectedProvince && selectedCity && fullAddress) {
+        const payload = {
+          ...showFormRegister,
+          ...userRegistrationData,
+          province: selectedProvince,
+          city: selectedCity,
+          adress: fullAddress
+        }
+        handleRegister(payload);
+        setRegistrationModalStatus(2);
+      }
     }
   }
 
@@ -95,6 +118,10 @@ const Navbar = (props) => {
 
   useEffect(() => {
     setShowRegistrationModal(showFormRegister ? true : false);
+
+    if (showFormRegister) {
+      setShowDrawer(false);
+    }
   }, [showFormRegister])
 
   useEffect(() => {
@@ -230,50 +257,93 @@ const Navbar = (props) => {
       <Modal
         showModal={showRegistrationModal}
         setShowModal={setShowRegistrationModal}
-        footerStyle={{ backgroundColor: '#f1f9ff' }}
-        closeTitle="Batal"
-        submitTitle="Daftar"
-        submitAction={() => handleSubmitRegister()}
       >
         <div className="preference-bar position-static">
           <h4 className="font-playfair">Form Pendaftaran</h4>
           <hr />
           {provinceList ?
             <>
-              <p className="mt-3 mb-2 text-secondary">Provinsi Domisili</p>
-              <Select
-                className={`custom-react-select mb-2 ${provinceError && 'danger-border'}`}
-                classNamePrefix="select"
-                isDisabled={isSelectLoading}
-                isLoading={isSelectLoading}
-                isClearable={true}
-                isSearchable={true}
-                options={provinceList}
-                onChange={(province) => {
-                  setProvinceError(false);
-                  setSelectedProvince(province);
-                }}
-              />
-              {provinceError && <p className="text-danger">Provinsi harus diisi</p>}
+              {registrationModalStatus === 0 && (
+                <>
+                  <button
+                    className="btn btn-primary w-100 mt-3 mb-3"
+                    onClick={() => handleSubmitRegister({ role: 1 })}>
+                    Daftar sebagai Wisatawan
+                  </button>
+                  <p className="w-100 text-center mb-3">atau</p>
+                  <button
+                    className="btn btn-primary w-100 mb-3"
+                    onClick={() => handleSubmitRegister({ role: 2 })}>
+                    Daftar sebagai Penyedia Layanan
+                  </button>
+                </>
+              )}
 
-              <p className="mt-3 mb-2 text-secondary">Kota/Kabupaten Domisili</p>
-              <Select
-                className={`custom-react-select mb-2 ${cityError && 'danger-border'}`}
-                classNamePrefix="select"
-                isDisabled={isSelectLoading}
-                isLoading={isSelectLoading}
-                isClearable={true}
-                isSearchable={true}
-                options={cityList}
-                onChange={(city) => {
-                  setCityError(false);
-                  setSelectedCity(city);
-                }}
+              {registrationModalStatus === 1 && (
+                <>
+                  <p className="mt-3 mb-2 text-secondary">Provinsi Domisili</p>
+                  <Select
+                    className={`custom-react-select mb-2 ${provinceError && 'danger-border'}`}
+                    classNamePrefix="select"
+                    isDisabled={isSelectLoading}
+                    isLoading={isSelectLoading}
+                    isClearable={true}
+                    isSearchable={true}
+                    options={provinceList}
+                    onChange={(province) => {
+                      setProvinceError(false);
+                      setSelectedProvince(province);
+                    }}
+                  />
+                  {provinceError && <p className="text-danger">Provinsi harus diisi!</p>}
+
+                  <p className="mt-3 mb-2 text-secondary">Kota/Kabupaten Domisili</p>
+                  <Select
+                    className={`custom-react-select mb-2 ${cityError && 'danger-border'}`}
+                    classNamePrefix="select"
+                    isDisabled={isSelectLoading}
+                    isLoading={isSelectLoading}
+                    isClearable={true}
+                    isSearchable={true}
+                    options={cityList}
+                    onChange={(city) => {
+                      setCityError(false);
+                      setSelectedCity(city);
+                    }}
+                  />
+                  {cityError && <p className="text-danger">Kota harus diisi!</p>}
+
+                  <p className="mt-3 mb-2 text-secondary">Alamat Lengkap</p>
+                  <input
+                    className={`custom-react-input w-100 ${fullAddressError && 'danger-border'}`}
+                    placeholder="Jalan / Desa / Kelurahan"
+                    value={fullAddress}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setFullAddress(value);
+                      if (value) setFullAdressError(false);
+                      else (setFullAdressError(true))
+                    }}
+                  />
+                  {fullAddressError && <p className="text-danger">Alamat Lengkap harus diisi!</p>}
+
+                  <button
+                    className="btn btn-primary mt-4 w-100 justify-content-center"
+                    onClick={() => handleSubmitRegister()}>
+                    Kirim
+                  </button>
+                </>
+              )}
+              <MobileStepper
+                variant="dots"
+                steps={2}
+                position="static"
+                activeStep={registrationModalStatus}
+                className="bg-cyan justify-content-center mt-4"
               />
-              {cityError && <p className="text-danger">Kota harus diisi</p>}
             </>
             :
-            <div>Loading</div>
+            <div>Loading ...</div>
           }
         </div>
       </Modal>

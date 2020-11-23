@@ -244,7 +244,7 @@ const DestinasiDetail = () => {
             <h4 className="font-playfair">Detail Pesanan</h4>
             <hr />
 
-            <p className="mb-2 text-secondary">Jumlah Tiket</p>
+            <p className="mb-2">Jumlah Tiket</p>
             <input
               className="custom-react-input w-100"
               placeholder="1234"
@@ -252,7 +252,7 @@ const DestinasiDetail = () => {
 
             />
 
-            <p className="mt-3 mb-2 text-secondary">Nama Pesanan</p>
+            <p className="mt-3 mb-2">Nama Pesanan</p>
             <div className="custom-react-input w-100 pt-2 pb-2">
               <TextField
                 id="date"

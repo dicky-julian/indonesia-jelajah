@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { Chip, TextField, MenuItem } from '@material-ui/core';
 import Select from 'react-select';
+import { Spinner } from '../../layouts/base/spinner';
 import { PlayCircleFilledOutlined, PersonOutline, ConfirmationNumberOutlined, ArrowDropDownCircle } from '@material-ui/icons';
 import { decodeToken } from '../../../helpers/jwt';
 import { getCityByProvince } from '../../../services/api/location';
+import { createUser, getUserByKey } from '../../../services/api/user';
+import { generateToken } from '../../../helpers/jwt';
 
 const Profile = (props) => {
-  const { accessToken, province, handleGetAllProvince, history } = props;
+  const { accessToken, province, setAuthToken, handleGetAllProvince, history } = props;
 
   const [userAccount, setUserAccount] = useState();
   const [isSelectLoading, setIsSelectLoading] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   const [displayName, setDisplayName] = useState();
   const [provinceList, setProvinceList] = useState();
   const [selectedProvince, setSelectedProvince] = useState(false);
   const [cityList, setCityList] = useState([]);
   const [selectedCity, setSelectedCity] = useState(false);
+  const [fullAdress, setFullAddress] = useState();
 
   const currencies = [
     {
@@ -39,7 +44,8 @@ const Profile = (props) => {
   const isDisbaleButton = userAccount && selectedProvince && selectedCity ?
     displayName !== userAccount.displayName ||
     selectedProvince.label !== userAccount.province.label ||
-    selectedCity.label !== userAccount.city.label
+    selectedCity.label !== userAccount.city.label ||
+    fullAdress !== userAccount.adress
     : false;
 
   const handleGetCityByProvince = async () => {
@@ -66,6 +72,35 @@ const Profile = (props) => {
     }
   }
 
+  useEffect(() => {
+    console.log(isLoading, 'isLoading')
+  }, [isLoading])
+
+  const handleProfileSubmit = async () => {
+    setIsLoading(true);
+    const payload = {
+      ...userAccount,
+      displayName: displayName,
+      province: selectedProvince,
+      city: selectedCity,
+      adress: fullAdress
+    }
+
+    await getUserByKey('email', userAccount.email)
+      .then((userKey) => {
+        createUser(payload, userKey)
+          .then(() => {
+            const newAccessToken = generateToken(payload);
+            setAuthToken(newAccessToken);
+          })
+          .catch((error) => {
+            console.log(error, 'createUser')
+          })
+      })
+
+    setIsLoading(false);
+  }
+
   // SET USER ACCOUNT
   useEffect(() => {
     if (accessToken) {
@@ -80,9 +115,11 @@ const Profile = (props) => {
   // SET USER LOCATION
   useEffect(() => {
     if (userAccount) {
+      console.log(userAccount, 'userAccount')
       setSelectedProvince(userAccount.province);
       setSelectedCity(userAccount.city);
       setDisplayName(userAccount.displayName);
+      setFullAddress(userAccount.adress)
     }
   }, [userAccount])
 
@@ -110,11 +147,6 @@ const Profile = (props) => {
       handleGetCityByProvince();
     }
   }, [selectedProvince])
-
-  useEffect(() => {
-    console.log(selectedProvince)
-    console.log(selectedCity)
-  }, [selectedCity])
 
   return (
     <div>
@@ -206,8 +238,15 @@ const Profile = (props) => {
                       onChange={(city) => setSelectedCity(city)}
                     />
 
-                    <button className={`mt-3 ${!isDisbaleButton ? 'disable' : 'cursor-pointer'}`} disabled={!isDisbaleButton}>
-                      Simpan
+                    <p className="mb-2 text-secondary">Alamat Lengkap</p>
+                    <input
+                      className="custom-react-input w-100"
+                      defaultValue={fullAdress}
+                      onChange={(e) => setFullAddress(e.target.value)}
+                    />
+
+                    <button onClick={() => handleProfileSubmit()} className={`mt-3 ${!isDisbaleButton ? 'disable' : 'cursor-pointer'}`} disabled={!isDisbaleButton}>
+                      {isLoading ? <Spinner variant="light" /> : 'Simpan'}
                     </button>
                   </div>
                 </div>

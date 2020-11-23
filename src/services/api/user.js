@@ -19,6 +19,16 @@ const getUserByUid = (uid) => {
   });
 }
 
+const getUserByKey = (key, value) => {
+  return new Promise((resolve, reject) => {
+    fireDatabase.ref(reference)
+      .orderByChild(key)
+      .equalTo(value).on("child_added", ((snapshot) => {
+        resolve(snapshot.key);
+      }));
+  })
+}
+
 const createUser = (userData, uid) => {
   return new Promise((resolve, reject) => {
     fireDatabase.ref(`${reference}/${uid}`)
@@ -33,5 +43,6 @@ const createUser = (userData, uid) => {
 
 export {
   getUserByUid,
+  getUserByKey,
   createUser
 }
