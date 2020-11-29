@@ -36,7 +36,9 @@ const Article = () => {
 
                 <div>
                   <img src={gambar} />
-                  <h4 className="mt-3 mb-3">{judul}</h4>
+                  <Link to="/artikel/id_artikel">
+                    <h4 className="mt-3 mb-3">{judul}</h4>
+                  </Link>
                   <p className="font-weight-light">{isi.slice(0, 150)} ...</p>
                   <Link to="/artikel/id_artikel" className="btn-dark-primary">Baca Artikel</Link>
                 </div>

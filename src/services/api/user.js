@@ -30,12 +30,14 @@ const getUserByKey = (key, value) => {
 }
 
 const createUser = (userData, uid) => {
+  console.log(userData, uid)
   return new Promise((resolve, reject) => {
     fireDatabase.ref(`${reference}/${uid}`)
       .set(userData)
       .then(() => {
         resolve(setResponse(200, userData));
       }, (error) => {
+        console.log(error)
         reject(setResponse(500));
       });
   });

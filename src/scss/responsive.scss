@@ -11,6 +11,7 @@
 }
 
 @media screen and (max-width: 1400px) {
+  // FONT
   h1 {
     font-size: 35px;
   }
@@ -37,13 +38,17 @@
     height: 400px;
   }
 
-  .introduction>div.description .service-lists>div {
-    >svg {
-      font-size: 25px;
-    }
-
-    >h5 {
-      font-size: 16px;
+  .introduction {
+    >div.description {
+      .service-lists>div {
+        >svg {
+          font-size: 25px;
+        }
+    
+        >h5 {
+          font-size: 16px;
+        }
+      }
     }
   }
 
@@ -87,6 +92,38 @@
   .advertise-word {
     >.content-field> :nth-child(1) {
       margin-top: 362px;
+    }
+  }
+
+  .preference-bar {
+    width: 330px;
+  }
+
+  main {
+    &.main-destination {
+      .product-container {
+        width: calc(100% - 350px);
+        .product-list {
+          width: calc(50% - 10px);
+          margin-bottom: 20px;
+        }
+      }
+    }
+
+    &.main-article {
+      > div {
+        > :nth-child(1) {
+          width: calc(100% - 390px);
+      }
+      }
+    }
+  }
+
+  .article-container {
+    > :nth-child(2) {
+      > img {
+        height: 200px;
+      }
     }
   }
 }
@@ -151,17 +188,67 @@
     }
   }
 
-  main.main-landing>div {
-    padding-bottom: 150px;
+  .article-detail {
+    > main {
+      margin: 10px 0 !important;
+    }
+  }
 
-    &.introduction {
-      flex-direction: column;
+  main {
+    &.main-landing {
+      > div {
+        padding-bottom: 150px;
+    
+        &.introduction {
+          flex-direction: column;
+    
+          >div {
+            width: 100%;
+    
+            &.img {
+              display: none;
+            }
+          }
+        }
+      }
+    }
 
-      >div {
+    &.main-destination {
+      margin: 35px 0;
+      > div {
+        flex-direction: column-reverse;
+      }
+
+      .product-container {
         width: 100%;
+      }
+    }
 
-        &.img {
-          display: none;
+    &.container-destination-detail {
+      .features-description {
+        flex-direction: column;
+        > :nth-child(1) {
+          width: 100%;
+          margin-bottom: 20px;
+          padding-bottom: 30px;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        > :nth-child(2) {
+          width: 100%;
+          position: relative;
+          top: 0;
+        }
+      }
+    }
+
+    &.main-article {
+      > div {
+        flex-direction: column;
+        > :nth-child(1) {
+          width: 100%;
+        }
+        > :nth-child(2) {
+          width: 100%;
         }
       }
     }
@@ -176,6 +263,15 @@
 
       h3 {
         font-size: 25px;
+      }
+    }
+  }
+
+  .article-container {
+    > :nth-child(2) {
+      width: calc(100% - 215px);
+      > img {
+        height: 270px;
       }
     }
   }
@@ -204,9 +300,75 @@
       }
     }
   }
+
+  .preference-bar {
+    width: 100%;
+    margin-bottom: 30px;
+    position: relative;
+    top: 0;
+  }
 }
 
 @media screen and (max-width: 800px) {
+  main {
+    &.container-destination-detail {
+      div {
+        &.header-destination-detail {
+          width: 100%;
+          > div {
+            &:nth-child(1) {
+              width: calc(100% - 190px);
+              > div {
+                .item-carousel {
+                  height: 534px;
+                }
+              }
+            }
+            &:nth-child(2) {
+              > div {
+                .item-carousel {
+                  margin: -5px 0;
+                  height: 181px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &.main-article {
+      > div {
+        .article-preference-bar {
+          flex-direction: column-reverse;
+          > :nth-child(1) {
+            width: 100%;
+          }
+          > :nth-child(2) {
+            width: 100%;
+            margin-bottom: 25px;
+            flex-direction: row-reverse;
+            > img {
+              margin-left: 0;
+              margin-right: 15px;
+            }
+            div {
+              text-align: left;
+            }
+          }
+        }
+
+        .article-img-header {
+          height: 250px;
+        }
+      }
+    }
+
+    h2 {
+      font-size: 25px;
+    }
+  }
+
   .popular-article {
     .content-field {
       > div {
@@ -257,6 +419,64 @@
     margin-left: 10px;
   }
 
+  .product-list {
+    > .product-list-description {
+      padding: 15px;
+    }
+  }
+
+  .main-destination-detail {
+    > div {
+      flex-direction: column;
+      h3 {
+        font-size: 20px;
+      }
+      >.text-right {
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        margin-top: 25px;
+        padding-top: 25px;
+        text-align: left !important;
+        .btn {
+          width: 100%;
+        }
+      }
+    }
+
+    p {
+      text-align: justify;
+    }
+  }
+
+  .facility-container {
+    display: grid;
+    grid-template-columns: repeat(2, calc(50% - 7.5px));
+    grid-gap: 7.5px;
+  }
+
+  .article-container {
+    flex-direction: column-reverse;
+    > :nth-child(1) {
+      width: 100%;
+      > div {
+        display: inline-flex !important;
+        flex-direction: row-reverse;
+      }
+    }
+    > :nth-child(2) {
+      width: 100%;
+      a.btn-dark-primary {
+        display: none;
+      }
+      > img {
+        height: 200px;
+      }
+    }
+    span {
+      margin: 0 10px;
+      font-size: 13px;
+    }
+  }
+
   .popular-article {
     .content-field {
       grid-gap: 10px;
@@ -299,7 +519,13 @@
 }
 
 @media screen and (max-width: 500px) {
-  header.header-landing > div {
+  h1 {
+    font-size: 25px;
+  }
+
+  header.header-landing > div,
+  header.header-destination, 
+  header.header-article {
     h1 {
       font-size: 45px;
     }
@@ -313,7 +539,7 @@
   .item-carousel {
     height: 325px;
     >.item-detail {
-      bottom: 65px;
+      bottom: 85px;
   }
   }
 
@@ -333,6 +559,35 @@
     }
   }
 
+  main {
+    &.main-destination {
+      .product-container {
+        .product-list {
+          width: 100%;
+        }
+      }
+    }
+
+    &.container-destination-detail {
+      div {
+        &.header-destination-detail {
+          width: 100%;
+          .slick-list {
+            height: 350px !important;
+          }
+          > div {
+            &:nth-child(1) {
+              width: calc(100% - 120px);
+            }
+            &:nth-child(2) {
+              width: 120px;
+            }
+          }
+        }
+      }
+    }
+  }
+
   .popular-article {
     .content-field {
       > div {
@@ -348,9 +603,6 @@
 }
 
 @media screen and (max-width: 350px) {
-  h1 {
-    font-size: 25px;
-  }
   .item-carousel {
     height: 375px;
 }

@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Chip, TextField, MenuItem } from '@material-ui/core';
 import Select from 'react-select';
 import { Spinner } from '../../layouts/base/spinner';
-import { PlayCircleFilledOutlined, PersonOutline, ConfirmationNumberOutlined, ArrowDropDownCircle } from '@material-ui/icons';
+import { Check, PlayCircleFilledOutlined, PersonOutline, ConfirmationNumberOutlined, ArrowDropDownCircle, BrandingWatermarkOutlined } from '@material-ui/icons';
 import { decodeToken } from '../../../helpers/jwt';
 import { getCityByProvince } from '../../../services/api/location';
 import { createUser, getUserByKey } from '../../../services/api/user';
+import { addDestinationImage } from '../../../services/api/destination';
 import { generateToken } from '../../../helpers/jwt';
 
 const Profile = (props) => {
@@ -21,6 +22,8 @@ const Profile = (props) => {
   const [cityList, setCityList] = useState([]);
   const [selectedCity, setSelectedCity] = useState(false);
   const [fullAdress, setFullAddress] = useState();
+  const [facilitieLists, setFacilitieLists] = useState();
+  const [destinationDescription, setDestinationDescription] = useState();
 
   const currencies = [
     {
@@ -41,12 +44,37 @@ const Profile = (props) => {
     },
   ];
 
+  const facilities = [
+    {
+      label: 'Tempat Parkir',
+      value: 'LocalParking',
+    },
+    {
+      label: 'Toilet',
+      value: 'Wc'
+    },
+    {
+      label: 'Tempat Makan',
+      value: 'Restaurant'
+    },
+    {
+      label: 'ATM',
+      value: 'Payment'
+    },
+    {
+      label: 'Wifi',
+      value: 'Wifi'
+    }
+  ]
+
   const isDisbaleButton = userAccount && selectedProvince && selectedCity ?
     displayName !== userAccount.displayName ||
     selectedProvince.label !== userAccount.province.label ||
     selectedCity.label !== userAccount.city.label ||
     fullAdress !== userAccount.adress
     : false;
+
+  const isDisableDestinationButton = !destinationDescription || !facilitieLists || (facilitieLists && !facilitieLists.length > 2) ? true : false;
 
   const handleGetCityByProvince = async () => {
     if (selectedProvince) {
@@ -71,10 +99,6 @@ const Profile = (props) => {
       setIsSelectLoading();
     }
   }
-
-  useEffect(() => {
-    console.log(isLoading, 'isLoading')
-  }, [isLoading])
 
   const handleProfileSubmit = async () => {
     setIsLoading(true);
@@ -101,6 +125,24 @@ const Profile = (props) => {
     setIsLoading(false);
   }
 
+  const handleAddDestinationImage = async (files) => {
+    await addDestinationImage(userAccount, files)
+      .then((response) => {
+        console.log(response, 'handleAddDestinationImage')
+      })
+      .catch((error) => {
+        console.log(error, 'errorhandleAddDestinationImage')
+      })
+  }
+
+  const imageStores = [
+    'https://images.pexels.com/photos/5011070/pexels-photo-5011070.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+    'https://images.pexels.com/photos/1657214/pexels-photo-1657214.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+    'https://images.pexels.com/photos/5110646/pexels-photo-5110646.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+    'https://images.pexels.com/photos/2916337/pexels-photo-2916337.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+    'https://images.pexels.com/photos/2291648/pexels-photo-2291648.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+  ];
+
   // SET USER ACCOUNT
   useEffect(() => {
     if (accessToken) {
@@ -115,7 +157,6 @@ const Profile = (props) => {
   // SET USER LOCATION
   useEffect(() => {
     if (userAccount) {
-      console.log(userAccount, 'userAccount')
       setSelectedProvince(userAccount.province);
       setSelectedCity(userAccount.city);
       setDisplayName(userAccount.displayName);
@@ -159,7 +200,12 @@ const Profile = (props) => {
               <hr />
               <a href="#profil-saya" className="d-flex w-100 align-items-center pt-3 pb-3 text-black">
                 <PersonOutline className="mr-2" />
-                <span>Profil</span>
+                <span>Profil Saya</span>
+              </a>
+
+              <a href="#profil-wisata" className="d-flex w-100 align-items-center pt-3 pb-3 text-black">
+                <BrandingWatermarkOutlined className="mr-2" />
+                <span>Profil Destinasi</span>
               </a>
 
               <a href="#pesanan-saya" className="d-flex w-100 align-items-center pt-3 pb-3 text-black">
@@ -200,7 +246,6 @@ const Profile = (props) => {
                   </div>
 
                   <div>
-
                     <p className="mb-2 text-secondary">Nama Pengguna</p>
                     <input
                       className="custom-react-input w-100"
@@ -238,7 +283,7 @@ const Profile = (props) => {
                       onChange={(city) => setSelectedCity(city)}
                     />
 
-                    <p className="mb-2 text-secondary">Alamat Lengkap</p>
+                    <p className="mt-3 mb-2 text-secondary">Alamat Lengkap</p>
                     <input
                       className="custom-react-input w-100"
                       defaultValue={fullAdress}
@@ -252,30 +297,59 @@ const Profile = (props) => {
                 </div>
               </div>
 
+              {/* LIST OF PRODUCT'S INFORMATIONS */}
+              <div id="profil-wisata" className="p-3 mt-3">
+                <div className="d-flex justify-content-between">
+                  <div>
+                    <div className="d-flex">
+                      <PersonOutline className="mr-2" />
+                      <h4>Informasi Destinasi</h4>
+                    </div>
+                    <p className="text-muted">Ciptakan profil menarik untuk wisatamu.</p>
+                  </div>
+                  <div className="d-flex align-items-center covid-status mt-3 h-fit-content">
+                    <Check className="mr-2" />
+                    <span>Standar COVID-19</span>
+                  </div>
+                </div>
+                <div className="destination-account-view">
+                  <div className="d-flex destination-gallery">
+                    {imageStores.map((imageUrl, index) => (
+                      <img src={imageUrl} key={index} />
+                    ))}
+                  </div>
+                  <div className="d-flex justify-content-between align-items-center mt-2">
+                    <p className="text-danger mb-0 warning-text">Foto setidaknya harus berjumlah 3 agar destinasi dapat tervalidasi *</p>
+                    <button className="btn btn-sm btn-primary d-inline-flex btn-add-img">
+                      Tambahkan Foto
+                      <input type="file" className="position-absolute" onChange={(e) => handleAddDestinationImage(e.target.files)} multiple />
+                    </button>
+                  </div>
+
+                  <div className="destination-details">
+                    <p className="mt-3 mb-2 text-muted">Deskripsi Destinasi</p>
+                    <textarea rows="10" onChange={(e) => setDestinationDescription(e.target.value)}></textarea>
+
+                    <p className="mt-3 mb-2 text-muted">Fasilitas Destinasi</p>
+                    <Select
+                      isMulti
+                      options={facilities}
+                      className="basic-multi-select"
+                      classNamePrefix="select"
+                      onChange={(e) => setFacilitieLists(e)}
+                    />
+                    <button onClick={() => handleProfileSubmit()} className={`mt-3 ${isDisableDestinationButton ? 'disable' : 'cursor-pointer'}`} disabled={isDisableDestinationButton}>
+                      {isLoading ? <Spinner variant="light" /> : 'Simpan'}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
               {/* LIST ORDER'S INFORMATIONS */}
               <div id="pesanan-saya" className="p-3 mt-3">
                 <div className="d-flex">
                   <ConfirmationNumberOutlined className="mr-2" />
                   <h4>Informasi Pesanan</h4>
-                </div>
-                <p className="text-muted">Temukan pesananmu dengan mudah.</p>
-                <div className="d-flex">
-                  <TextField
-                    error={false}
-                    id="filled-select-currency"
-                    select
-                    label="Urutkan"
-                    value="buy"
-                    helperText=""
-                    variant="filled"
-                  >
-                    <MenuItem value="buy">
-                      Baru saja dibeli
-                </MenuItem>
-                    <MenuItem value="usage">
-                      Tanggal Terdekat
-                </MenuItem>
-                  </TextField>
                 </div>
 
                 {currencies.map((data, index) => (

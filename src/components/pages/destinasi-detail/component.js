@@ -16,6 +16,14 @@ const DestinasiDetail = () => {
     initialSlide: 0,
     prevArrow: <></>,
     nextArrow: <></>,
+    responsive: [
+      {
+        breakpoint: 1000,
+        settings: {
+          dots: false
+        }
+      }
+    ]
   };
 
   const subSliderOptions = {
@@ -30,6 +38,14 @@ const DestinasiDetail = () => {
     verticalSwiping: true,
     prevArrow: <></>,
     nextArrow: <></>,
+    responsive: [
+      {
+        breakpoint: 500,
+        settings: {
+          slidesToShow: 2,
+        }
+      },
+    ]
   }
 
   const imageStores = [
