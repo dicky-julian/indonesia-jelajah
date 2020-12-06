@@ -126,6 +126,12 @@
       }
     }
   }
+
+  .cart-container {
+    > :nth-child(2) {
+      width: calc(100% - 345px);
+    }
+  }
 }
 
 @media screen and (max-width: 1000px) {
@@ -213,6 +219,7 @@
       }
     }
 
+    
     &.main-destination {
       margin: 35px 0;
       > div {
@@ -248,6 +255,16 @@
           width: 100%;
         }
         > :nth-child(2) {
+          width: 100%;
+        }
+      }
+    }
+
+    &.container-destination-detail {
+      .cart-container {
+        width: 88%;
+        flex-direction: column !important;
+        .profile-container {
           width: 100%;
         }
       }
@@ -360,6 +377,21 @@
 
         .article-img-header {
           height: 250px;
+        }
+      }
+    }
+
+    &.container-destination-detail {
+      .cart-container {
+        .profile-container {
+          > div#profil-saya {
+            .account-view {
+              flex-direction: column;
+              > div {
+                width: 100%;
+              }
+            }
+          }
         }
       }
     }

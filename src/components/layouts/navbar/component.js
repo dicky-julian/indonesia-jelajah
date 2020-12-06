@@ -6,11 +6,12 @@ import { ShoppingCartOutlined, AccountCircleOutlined, PermIdentityOutlined, Exit
 import Select from 'react-select';
 import { getCityByProvince } from '../../../services/api/location';
 import Modal from '../../layouts/base/modal';
+import { randomAlphaNumeric } from '../../../helpers/random';
 
 const Navbar = (props) => {
-  const { handleLogin, handleRegister, handleGetAllProvince, handleShowNotification, province, accessToken, showFormRegister, showNotification, handleSignOut } = props;
+  const { handleLogin, handleRegister, handleGetAllProvince, province, accessToken, showFormRegister, showNotification, handleSignOut } = props;
 
-  const [showDrawer, setShowDrawer] = useState();
+  const [showDrawer, setShowDrawer] = useState(false);
   const [profileMenuAnchor, setProfileMenuAnchor] = useState(null);
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
   const [showNotificationModal, setShowNotificationModal] = useState(false);
@@ -57,12 +58,12 @@ const Navbar = (props) => {
     await getCityByProvince(value)
       .then((response) => {
         if (response.data) {
-          const dataKotaKabupaten = response.data.kota_kabupaten;
+          const dataKotaKabupaten = response.data;
           const newDataKotaKabupaten = [];
           dataKotaKabupaten.map((kotaKabupaten) => {
-            const { id, nama } = kotaKabupaten;
+            const { id, name } = kotaKabupaten;
             return newDataKotaKabupaten.push({
-              label: nama,
+              label: name,
               value: id
             });
           });
@@ -77,7 +78,9 @@ const Navbar = (props) => {
     if (status === 0) {
       setUserRegistrationData({
         ...userRegistrationData,
-        role: payload.role
+        role: payload.role,
+        money_code: randomAlphaNumeric(3, 5),
+        money_balance: 0
       })
       setRegistrationModalStatus(1);
     } else if (status === 1) {
@@ -97,6 +100,7 @@ const Navbar = (props) => {
         const payload = {
           ...showFormRegister,
           ...userRegistrationData,
+          displayName: showFormRegister.displayName.toLowerCase(),
           province: selectedProvince,
           city: selectedCity,
           adress: fullAddress
@@ -109,12 +113,7 @@ const Navbar = (props) => {
 
   const handleCloseNotificationModal = () => {
     setShowNotificationModal(false);
-    handleShowNotification('');
   }
-
-  useEffect(() => {
-    console.log(accessToken);
-  }, [accessToken])
 
   useEffect(() => {
     setShowRegistrationModal(showFormRegister ? true : false);
@@ -150,9 +149,9 @@ const Navbar = (props) => {
   useEffect(() => {
     if (!provinceList && province) {
       const newProvinceList = [];
-      province.map(({ id, nama }) => {
+      province.map(({ id, name }) => {
         return newProvinceList.push({
-          label: nama,
+          label: name,
           value: id
         });
       });
@@ -212,7 +211,10 @@ const Navbar = (props) => {
                   </Link>
                 </MenuItem>
                 <MenuItem>
-                  <div className="d-flex" onClick={() => handleSignOut()}>
+                  <div className="d-flex" onClick={() => {
+                    window.location.href = '/';
+                    handleSignOut();
+                  }}>
                     <ExitToAppOutlined style={{ fontSize: '1.2rem' }} />
                     <span className="ml-2 mr-4">Keluar</span>
                   </div>
@@ -236,7 +238,7 @@ const Navbar = (props) => {
           </div>
 
           {/* content bar */}
-          <Drawer anchor="top" open={showDrawer} onClose={() => setShowDrawer()}>
+          <Drawer anchor="top" open={showDrawer} onClose={() => setShowDrawer(false)}>
             <div className="nav-link-drawer">
               {listLink.map(({ path, name }, index) => (
                 <Link to={path} key={index}>{name}</Link>

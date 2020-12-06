@@ -1,75 +1,113 @@
-import { fireStorage } from '../firebase';
-import { getUserByKey, createUser } from './user';
+import { fireDatabase, fireStorage } from '../firebase';
+import { createUser } from './user';
+import { setResponse } from '../../helpers/response';
 
 const references = fireStorage.ref();
+const ticketReference = 'ticket';
+const userReference = 'user';
 
-const addDestinationImage = (payload, files) => {
+const addDestinationImage = (userAccount, files) => {
   return new Promise(async (resolve, reject) => {
-    let resultRecords = {
-      url: [],
-      alert: []
+    if (files) {
+      const file = files[0];
+      const { uid } = userAccount;
+
+      // filter file's size up to 3MB
+      if (file.size < 3000000) {
+        const reference = references.child(`destination/${uid}/${new Date().getTime()}`);
+        const pathReference = reference.put(file);
+
+        pathReference.on('state_changed', () => {
+
+        }, (error) => {
+          reject({
+            errMsg: 'Terjadi kesalahan ketika menambahkan file.'
+          });
+        }, () => {
+          pathReference.snapshot.ref.getDownloadURL()
+            .then(async (downloadUrl) => {
+              const destinationImages = userAccount.destinationImages || [];
+
+              destinationImages.push(downloadUrl);
+              if (destinationImages.length > 3 && userAccount.cheapestPrice) {
+                userAccount.verified = true;
+              }
+              const payload = {
+                ...userAccount,
+                destinationImages
+              }
+
+              await createUser(payload, uid)
+                .then(() => {
+                  resolve(payload);
+                })
+                .catch(() => {
+                  reject({
+                    errMsg: 'Terjadi kesalahan ketika menambahkan file.'
+                  });
+                })
+            })
+        })
+      } else {
+        reject(null);
+      }
     }
+  })
+}
 
-    let fileIndexs = Object.keys(files).length;
+const getDestinationTicketByKey = (key, value) => {
+  return new Promise((resolve, reject) => {
+    fireDatabase.ref(ticketReference)
+      .orderByChild(key)
+      .equalTo(value).on("child_added", ((snapshot) => {
+        resolve(snapshot.key);
+      }))
+  })
+}
 
-    await getUserByKey('email', payload.email)
-      .then((uid) => {
-        for (let fileIndex in files) {
-          const reference = references.child(`destination/${uid}/${new Date().getTime()}${fileIndex}`);
-          const pathReference = reference.put(files[fileIndex]);
+const getDestinationTicketbyUid = (uid) => {
+  return new Promise((resolve, reject) => {
+    fireDatabase.ref(`${ticketReference}/${uid}`).once('value')
+      .then((response) => {
+        const ticketData = response.val();
 
-          if (fileIndexs > 0) {
-            --fileIndexs;
-            if (files[fileIndex].size < 3000000) {
-              pathReference.on('state_changed', () => {
-                resultRecords.alert.push({
-                  label: 'success',
-                  value: `${files[fileIndex].name} berhasil ditambahkan.`
-                })
-              }, (error) => {
-                resultRecords.alert.push({
-                  label: 'error',
-                  value: `Kesalahan ketika menambahkan ${files[fileIndex].name}.`
-                })
-              }, (response) => {
-                pathReference.snapshot.ref.getDownloadURL()
-                  .then((downloadURL) => {
-                    console.log(downloadURL)
-                    resultRecords.url.push(downloadURL);
-                  })
-                  .then(async () => {
-                    if (fileIndexs < 1) {
-                      const newPayload = {
-                        ...payload,
-                        destinationImages: resultRecords.url
-                      }
-
-                      await createUser(newPayload, uid)
-                        .then(() => {
-                          resolve(resultRecords);
-                        })
-                        .catch(() => {
-                          reject('Terjadi kesalahan ketika menyimpan data.')
-                        })
-                    }
-                  })
-              })
-            } else {
-              resultRecords.alert.push({
-                label: 'error',
-                value: `${files[fileIndex].name} melebihi batas ukuran file.`
-              })
-            }
-          }
+        if (ticketData) {
+          resolve(setResponse(200, ticketData));
         }
+        resolve(setResponse(404));
+      }, (error) => {
+        reject(setResponse(500))
+      })
+  })
+}
 
-        console.log('ug')
+const addDestinationTicket = (ticketData, uid) => {
+  return new Promise(async (resolve, reject) => {
+    fireDatabase.ref(`${ticketReference}/${uid}/${Date.now()}`)
+      .set(ticketData)
+      .then(() => {
+        resolve(setResponse(200, ticketData));
+      }, (error) => {
+        reject(setResponse(500));
       });
+  });
+}
 
-    console.log(resultRecords, 'resultRecords')
+const getDestinationByKey = (key, value) => {
+  return new Promise((resolve, reject) => {
+    fireDatabase.ref(userReference)
+      .orderByChild(key)
+      .startAt(value)
+      .on('value', ((snapshot) => {
+        resolve(snapshot.val())
+      }))
   })
 }
 
 export {
-  addDestinationImage
+  getDestinationTicketByKey,
+  getDestinationTicketbyUid,
+  getDestinationByKey,
+  addDestinationImage,
+  addDestinationTicket
 }

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { handleLogin, handleRegister, handleSignOut, handleGetAllProvince, handleShowNotification } from './action';
+import { handleLogin, handleRegister, handleSignOut, handleGetAllProvince } from './action';
 import Navbar from './component';
 
 const mapStateToProps = (state) => ({
@@ -14,7 +14,6 @@ const mapDispatchToProps = (dispatch) => ({
   handleRegister: (userData) => dispatch(handleRegister(userData)),
   handleGetAllProvince: () => dispatch(handleGetAllProvince()),
   handleSignOut: () => dispatch(handleSignOut()),
-  handleShowNotification: () => dispatch(handleShowNotification())
 });
 
 export default connect(

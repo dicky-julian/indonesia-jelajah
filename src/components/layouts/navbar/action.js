@@ -3,6 +3,7 @@ import { getAllProvince } from '../../../services/api/location';
 import { createUser } from '../../../services/api/user';
 import { SET_AUTH_TOKEN, SET_SHOW_FORM_REGISTER, SET_SIGN_OUT, SET_ALL_PROVINCE, SET_SHOW_NOTIFICATION } from '../../../helpers/actionTypes';
 import { generateToken } from '../../../helpers/jwt';
+import { showNotification } from '../../layouts/base/notification';
 
 const handleLogin = () => async (dispatch) => {
   await loginWithGoogle()
@@ -10,32 +11,33 @@ const handleLogin = () => async (dispatch) => {
       const { status, data } = response;
       if (status === 200) {
         dispatch(setAuthToken(data));
+        showNotification('Berhasil', 'Login berhasil!', 'success');
       } else if (status === 404) {
         dispatch(setShowFormRegistration(data));
       }
     })
     .catch((error) => {
       dispatch(setAuthToken());
+      showNotification('Kesalahan', 'Terjadi kesalahan ketika masuk.', 'danger');
     });
 }
 
 const handleRegister = (userData) => async (dispatch) => {
   const uid = userData.uid;
-  delete userData.uid;
 
   await createUser(userData, uid)
     .then((response) => {
       const { status, data } = response;
       if (status === 200) {
-        console.log(data);
         const accessToken = generateToken(data);
         dispatch(setAuthToken(accessToken));
         dispatch(setShowFormRegistration(false));
-        dispatch(handleShowNotification('Pendaftaran Akun Berhasil!'))
+        showNotification('Berhasil', 'Pendaftaran akun berhasil!', 'success');
       }
     })
-    .catch((error) => {
+    .catch(() => {
       dispatch(setShowFormRegistration(false));
+      showNotification('Kesalahan', 'Terjadi kesalahan ketika mendaftarkan akun.', 'danger');
     })
 }
 
@@ -46,7 +48,7 @@ const handleGetAllProvince = () => async (dispatch) => {
       const { data } = response;
 
       if (data) {
-        dispatch(setAllProvince(data.provinsi));
+        dispatch(setAllProvince(data));
       } else {
         dispatch(setAllProvince());
       }
@@ -89,20 +91,10 @@ const setAllProvince = (provinceData) => {
   }
 }
 
-const handleShowNotification = (message = '') => {
-  return {
-    type: SET_SHOW_NOTIFICATION,
-    payload: {
-      showNotification: message
-    }
-  }
-}
-
 export {
   handleLogin,
   handleRegister,
   handleSignOut,
   handleGetAllProvince,
-  handleShowNotification,
   setAuthToken
 }

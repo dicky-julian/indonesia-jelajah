@@ -9,12 +9,13 @@ import {
 const Modal = (
   {
     showModal,
-    setShowModal,
+    setShowModal = (() => { }),
     children,
     footerStyle = {},
     closeTitle,
     submitTitle,
-    submitAction
+    submitAction,
+    style
   }) => {
   return (
     <Dialog
@@ -24,18 +25,20 @@ const Modal = (
       aria-labelledby="alert-dialog-slide-title"
       aria-describedby="alert-dialog-slide-description"
     >
-      <DialogContent className="p-0">
-        {children}
-      </DialogContent>
-      {submitTitle &&
-        <DialogActions style={footerStyle}>
-          <Button onClick={() => setShowModal(false)} color="primary">
-            {closeTitle}
-          </Button>
-          <Button onClick={submitAction} color="primary">
-            {submitTitle}
-          </Button>
-        </DialogActions>}
+      <div style={style}>
+        <DialogContent className="p-0">
+          {children}
+        </DialogContent>
+        {submitTitle &&
+          <DialogActions style={footerStyle}>
+            <Button onClick={() => setShowModal(false)} color="primary">
+              {closeTitle}
+            </Button>
+            <Button onClick={submitAction} color="primary">
+              {submitTitle}
+            </Button>
+          </DialogActions>}
+      </div>
     </Dialog>
   )
 }
