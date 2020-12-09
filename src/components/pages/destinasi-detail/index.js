@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import DestinasiDetail from './component';
-import { setTransaction } from './action';
 import { setAuthToken } from '../../layouts/navbar/action';
 
 const mapStateToProps = (state) => ({
@@ -9,7 +8,6 @@ const mapStateToProps = (state) => ({
 });
 const mapDispathToProps = (dispatch) => ({
   setAuthToken: (token) => dispatch(setAuthToken(token)),
-  setTransaction: (transactionData) => dispatch(setTransaction(transactionData))
   // getData: (id, data) => dispatch(getData(id, data))
 });
 

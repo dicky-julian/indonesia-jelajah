@@ -7,7 +7,7 @@ const Spinner = (variant, className = '') => (
 )
 
 const FullSpinner = () => (
-  <div className="d-flex justify-content-center align-items-center vw-100 isloading-component position-absolute">
+  <div className="d-flex justify-content-center align-items-center vw-100 isloading-component position-absolute fullspinner">
     <div className="spinner-border text-primary" role="status">
       <span className="sr-only">Loading...</span>
     </div>

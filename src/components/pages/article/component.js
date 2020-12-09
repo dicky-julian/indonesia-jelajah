@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { PersonOutline, CalendarTodayOutlined } from '@material-ui/icons';
 import { articleList } from './action';
+import { getAllArticle } from '../../../services/api/article';
 
-const Article = () => {
+const Article = (props) => {
+  const { article, getArticle } = props;
+
+  useEffect(() => {
+    getArticle();
+  }, [])
+
+  useEffect(() => {
+    console.log(article, 'article')
+  }, [article])
+
   return (
     <div>
       <header className="header-article d-flex justify-content-center align-items-center">

@@ -1,3 +1,6 @@
+import { SET_ARTICLE } from '../../../helpers/actionTypes';
+import { getAllArticle } from '../../../services/api/article';
+
 const articleList = [
   {
     judul: 'Astronomy Binoculars A Great Alternative',
@@ -97,6 +100,23 @@ const articleList = [
   }
 ];
 
+const setArticle = (articleData) => ({
+  type: SET_ARTICLE,
+  payload: articleData
+})
+
+const getArticle = () => async (dispatch) => {
+  await getAllArticle()
+    .then((response) => {
+      dispatch(setArticle(response));
+    })
+    .catch(() => {
+      dispatch(setArticle([]));
+    })
+}
+
 export {
-  articleList
+  articleList,
+  setArticle,
+  getArticle
 }

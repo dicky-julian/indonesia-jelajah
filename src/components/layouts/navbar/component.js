@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Drawer, Menu, MenuItem, Snackbar, IconButton, MobileStepper } from '@material-ui/core';
-import { ShoppingCartOutlined, AccountCircleOutlined, PermIdentityOutlined, ExitToAppOutlined, Close } from '@material-ui/icons';
+import { CreateOutlined, AccountCircleOutlined, PermIdentityOutlined, ExitToAppOutlined, Close, SignalCellularNullSharp } from '@material-ui/icons';
 import Select from 'react-select';
 import { getCityByProvince } from '../../../services/api/location';
 import Modal from '../../layouts/base/modal';
@@ -184,9 +184,6 @@ const Navbar = (props) => {
         <div className="d-flex justify-content-end">
           {accessToken ?
             <div className="d-flex">
-              <Link to="/cart" className={isPrimaryNav ? 'text-white' : 'text-black'}>
-                <ShoppingCartOutlined />
-              </Link>
               <div className={`cursor-pointer ${isPrimaryNav ? 'text-white' : 'text-black'}`}>
                 <AccountCircleOutlined
                   aria-label="more"
@@ -204,13 +201,19 @@ const Navbar = (props) => {
                 onClose={() => setProfileMenuAnchor(null)}
                 className="mt-5"
               >
-                <MenuItem>
+                <MenuItem className="pt-2 pb-2" onClick={() => setProfileMenuAnchor(null)}>
                   <Link to="/profile" className="d-flex text-black">
                     <PermIdentityOutlined style={{ fontSize: '1.2rem' }} />
                     <span className="ml-2 mr-4">Profil</span>
                   </Link>
                 </MenuItem>
-                <MenuItem>
+                <MenuItem className="pt-2 pb-2 mt-1 mb-1" onClick={() => setProfileMenuAnchor(null)}>
+                  <Link to="/article-create" className="d-flex text-black">
+                    <CreateOutlined style={{ fontSize: '1.2rem' }} />
+                    <span className="ml-2 mr-4">Tambah Artikel</span>
+                  </Link>
+                </MenuItem>
+                <MenuItem className="pt-2 pb-2" onClick={() => setProfileMenuAnchor(null)}>
                   <div className="d-flex" onClick={() => {
                     window.location.href = '/';
                     handleSignOut();

@@ -11,6 +11,7 @@ import { showNotification } from '../../layouts/base/notification';
 import { FullSpinner } from '../../layouts/base/spinner';
 import { facilitiesIcons } from '../.././../services/dummy/destination';
 import { decodeToken, generateToken } from '../../../helpers/jwt';
+import { randomAlphaNumeric } from '../../../helpers/random';
 
 const DestinasiDetail = (props) => {
   const { match, accessToken, setAuthToken } = props;
@@ -102,9 +103,10 @@ const DestinasiDetail = (props) => {
       setDateFormTicket('error');
     } else {
       const transactionData = {
+        id_transaction: randomAlphaNumeric(5, 3),
         id_destination,
         id_user: userAccount.uid,
-        id_ticket: ticketDetail.id_ticket,
+        details: ticketDetail,
         date: dateFormTicket
       }
       const payload = {

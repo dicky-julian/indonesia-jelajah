@@ -4,15 +4,18 @@ import Select from 'react-select';
 import { Spinner, FullSpinner } from '../../layouts/base/spinner';
 import { Dialog } from '../../layouts/base/dialog';
 import { Check, PlayCircleFilledOutlined, PersonOutline, ConfirmationNumberOutlined, ArrowDropDownCircle, BrandingWatermarkOutlined, HelpOutlineOutlined } from '@material-ui/icons';
+import QrCode from '../../layouts/base/qrcode';
 import Modal from '../../layouts/base/modal';
 import { decodeToken } from '../../../helpers/jwt';
 import { getCityByProvince } from '../../../services/api/location';
 import { createUser } from '../../../services/api/user';
 import { getDestinationTicketbyUid } from '../../../services/api/destination';
 import { addDestinationImage, addDestinationTicket } from '../../../services/api/destination';
+import { getTransaction } from '../../../services/api/transaction';
 import { generateToken } from '../../../helpers/jwt';
 import { showNotification } from '../../layouts/base/notification';
 import { facilities } from '../../../services/dummy/destination';
+import moment from 'moment';
 
 const Profile = (props) => {
   const { accessToken, province, setAuthToken, handleGetAllProvince, history } = props;
@@ -210,6 +213,24 @@ const Profile = (props) => {
       setFullAddress(userAccount.adress);
 
       if (userAccount.role === 1) {
+        getTransaction(userAccount.uid)
+          .then((response) => {
+            if (response.data) {
+              const listOfTicket = [];
+              for (let ticketKey in response.data) {
+                const ticketData = {
+                  ...response.data[ticketKey],
+                  code_transaction: ticketKey
+                }
+                listOfTicket.push(ticketData);
+              }
+              setTicketList(listOfTicket);
+            } else {
+              setTicketList([]);
+            }
+          }).catch(() => {
+            setTicketList([]);
+          })
       } else if (userAccount.role === 2) {
         setDestinationDescription(userAccount.destinationDescription);
         setFacilitieLists(userAccount.destinationFacilities);
@@ -387,24 +408,32 @@ const Profile = (props) => {
                     <h4>Informasi Pesanan</h4>
                   </div>
                   {ticketList.length ?
-                    <>{ticketList.map((data, index) => (
-                      <div className="ticket-container mt-3" key={index}>
-                        <h5>Ini Adalah Title Ticket</h5>
-                        <p className="text-secondary mb-0">Ini adalah deskripsi singkat dari ticket yang dimaksudkan</p>
-                        <hr />
-                        <div className="d-flex justify-content-between">
-                          <h5>Rp. 250.000</h5>
-                          <span>18 Maret 2020</span>
+                    <>
+                      {ticketList.map((data, index) => (
+                        <div className="product-ticket-container mt-3" key={index}>
+                          <div className="d-flex flex-column justify-content-center align-items-center bg-primary text-white">
+                            <h3>{data.date ? moment(data.date).format('DD') : ''}</h3>
+                            <span>{data.date ? moment(data.date).format('MMMM YYYY') : ''}</span>
+                          </div>
+
+                          <div className="p-3">
+                            <div className="d-flex justify-content-between align-items-center">
+                              <p className="mb-0">Kode Pesanan : <b>{data.code_transaction}</b></p>
+                              <h6 className="mb-0 text-success">Terverifikasi</h6>
+                            </div>
+                            <hr />
+                            <div className="d-flex justify-content-between align-items-end ticket-lists">
+                              <div style={{ width: 'calc(100% - 90px)' }}>
+                                <h5>{data.details ? data.details.title : ''}</h5>
+                                <h6 className="text-muted font-weight-normal">{data.details && data.details.description ? data.details.description.slice(0, 60) : ''}...</h6>
+                                <h6 className="text-primary mb-0">Rp. {data.details ? data.details.price : ''}</h6>
+                              </div>
+                              <QrCode value={data.id_transaction} />
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    ))
-                    }
-                      <div className="w-100 text-center mt-3">
-                        <button className="bg-muted">
-                          <span className="m-2">Lihat Lebih Banyak</span>
-                          <ArrowDropDownCircle />
-                        </button>
-                      </div>
+                      ))
+                      }
                     </>
                     :
                     <div className="empty-section mt-3">

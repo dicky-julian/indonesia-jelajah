@@ -1,12 +1,12 @@
-import { SET_ARTICLE } from '../../../helpers/actionTypes';
+import { SET_ARTICLE_NOTE } from '../../../helpers/actionTypes';
 
 const initialState = {
-  article: null
+  article: ''
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_ARTICLE:
+    case SET_ARTICLE_NOTE:
       return {
         ...state,
         article: action.payload

@@ -1,7 +1,0 @@
-const setTransaction = () => ({
-
-})
-
-export {
-  setTransaction
-}
