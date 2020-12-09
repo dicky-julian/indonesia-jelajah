@@ -46,7 +46,7 @@ const AppRoute = () => {
               <Route path="/cart" exact render={(props) => renderComponent(Cart, props)} />
               <Route path="/profile" exact render={(props) => renderComponent(Profile, props)} />
               <Route path="/artikel" exact render={(props) => renderComponent(Article, props)} />
-              <Route path="/artikel/:id_artikel" render={(props) => renderComponent(ArticleDetail, props)} />
+              <Route path="/artikel/:id_user/:id_artikel" render={(props) => renderComponent(ArticleDetail, props)} />
               <Route path="/article-create" render={(props) => renderComponent(ArticleCreator, props)} />
             </Switch>
           </Router>

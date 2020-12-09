@@ -13,10 +13,17 @@ const Editor = (props) => {
   const { accessToken, article, setArticle, history } = props;
 
   const [title, setTitle] = useState('');
+  const [subtitle, setSubtitle] = useState('');
   const [category, setCategory] = useState(null);
   const [file, setFile] = useState(null);
   const [userAccount, setUserAccount] = useState(null);
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
+
+  useEffect(() => {
+    return (() => {
+      clearArticleStore();
+    })
+  }, [])
 
   // SET USER ACCOUNT
   useEffect(() => {
@@ -29,7 +36,14 @@ const Editor = (props) => {
     }
   }, [accessToken])
 
-  const isCanSubmit = article && title && category && file;
+  const isCanSubmit = article && title && subtitle && category && file;
+
+  const clearArticleStore = () => {
+    setTitle('');
+    setSubtitle('');
+    setCategory(null);
+    setFile(null);
+  }
 
   const handleChangeFile = (file) => {
     if (file) {
@@ -45,15 +59,18 @@ const Editor = (props) => {
   const handleSubmit = async () => {
     const payload = {
       title,
+      subtitle,
       category,
       image: file.file,
-      content: article
+      content: article,
+      user: userAccount.displayName
     }
     setIsSubmitLoading(true);
 
     await createArticle(payload, userAccount.uid)
       .then(() => {
         setArticle('');
+        clearArticleStore();
         showNotification('Berhasil', 'Berhasil menambahkan artikel', 'success');
       })
       .catch((error) => {
@@ -90,6 +107,9 @@ const Editor = (props) => {
               {category === 'error' && <small className="text-danger">Kategori tidak boleh kosong</small>}
             </div>
           </div>
+
+          <label>SubJudul Artikel</label>
+          <textarea className="form-control mb-3" value={subtitle} onChange={(e) => setSubtitle(e.target.value)}></textarea>
 
           <div>
             {file ?

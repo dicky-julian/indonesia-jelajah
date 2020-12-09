@@ -11,7 +11,12 @@ const articleCategory = [
   { value: 'Kuliner', label: 'Kuliner' },
   { value: 'Travel', label: 'Travel' },
   { value: 'Bisnis', label: 'Bisnis' },
-  { value: 'Finansial', label: 'Finansial' }
+  { value: 'Finansial', label: 'Finansial' },
+  { value: 'Sains & Teknologi', label: 'Sains & Teknologi' },
+  { value: 'Sosial', label: 'Sosial' },
+  { value: 'Budaya', label: 'Budaya' },
+  { value: 'Arkeologi', label: 'Arkeologi' },
+  { value: 'Antariksa', label: 'Antariksa' },
 ];
 
 export {

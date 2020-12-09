@@ -19,14 +19,16 @@ const getAllArticle = () => {
   })
 }
 
-const getArticleByUid = (uid) => {
+const getArticleById = (id_user, id_article) => {
   return new Promise((resolve, reject) => {
-    fireDatabase.ref(`${reference}/${uid}`).once('value')
+    fireDatabase.ref(`${reference}/${id_user}/${id_article}`).once('value')
       .then((response) => {
         const articleData = response.val();
 
         if (articleData) {
           resolve(setResponse(200, articleData));
+        } else {
+          reject(setResponse(500))
         }
       }, (error) => {
         reject(setResponse(500, error))
@@ -64,6 +66,6 @@ const createArticle = (articleData, uid) => {
 
 export {
   getAllArticle,
-  getArticleByUid,
+  getArticleById,
   createArticle
 }

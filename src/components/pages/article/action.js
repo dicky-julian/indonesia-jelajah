@@ -108,7 +108,20 @@ const setArticle = (articleData) => ({
 const getArticle = () => async (dispatch) => {
   await getAllArticle()
     .then((response) => {
-      dispatch(setArticle(response));
+      const { data } = response;
+      const article = [];
+      if (data) {
+        for (let articleKey in data) {
+          for (let articleChildKey in data[articleKey]) {
+            const articleData = data[articleKey][articleChildKey];
+            articleData.date = articleChildKey;
+            articleData.uid = articleKey;
+
+            article.push(articleData);
+          }
+        }
+      }
+      dispatch(setArticle(article));
     })
     .catch(() => {
       dispatch(setArticle([]));

@@ -894,6 +894,10 @@ header.header-article {
       }
     }
   }
+  textarea:hover {
+    transition: .4s;
+    background-color: #f7f7f7;
+  }
 
   .jodit-container {
     width: 100% !important;
@@ -936,6 +940,14 @@ header.header-article {
       overflow-x: hidden;
       opacity: 0;
     }
+  }
+}
+
+.article-detail-container {
+  img {
+    max-width: 100%;
+    object-fit: cover;
+    object-position: center;
   }
 }
 

@@ -1,0 +1,84 @@
+[debug] [2020-12-09T08:54:42.781Z] ----------------------------------------------------------------------
+[debug] [2020-12-09T08:54:42.787Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\LNSW\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2020-12-09T08:54:42.788Z] CLI Version:   8.13.1
+[debug] [2020-12-09T08:54:42.788Z] Platform:      win32
+[debug] [2020-12-09T08:54:42.788Z] Node Version:  v14.6.0
+[debug] [2020-12-09T08:54:42.797Z] Time:          Wed Dec 09 2020 15:54:42 GMT+0700 (Western Indonesia Time)
+[debug] [2020-12-09T08:54:42.797Z] ----------------------------------------------------------------------
+[debug] [2020-12-09T08:54:42.798Z] 
+[debug] [2020-12-09T08:54:42.833Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-12-09T08:54:42.835Z] > authorizing via signed-in user
+[debug] [2020-12-09T08:54:42.836Z] [iam] checking project indonesia-jelajah for permissions ["firebase.projects.get","firebasedatabase.instances.update","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]
+[debug] [2020-12-09T08:54:42.847Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2020-12-09T08:54:42.847Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-12-09T08:54:44.353Z] <<< HTTP RESPONSE 200 {"date":"Wed, 09 Dec 2020 08:54:44 GMT","expires":"Mon, 01 Jan 1990 00:00:00 GMT","pragma":"no-cache","cache-control":"no-cache, no-store, max-age=0, must-revalidate","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-12-09T08:54:44.382Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/indonesia-jelajah:testIamPermissions  
+ {"permissions":["firebase.projects.get","firebasedatabase.instances.update","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[debug] [2020-12-09T08:54:46.155Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Wed, 09 Dec 2020 08:54:46 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=1109","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-12-09T08:54:46.159Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/indonesia-jelajah  
+ 
+[debug] [2020-12-09T08:54:46.538Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Wed, 09 Dec 2020 08:54:46 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-12-09T08:54:46.541Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/indonesia-jelajah  
+ 
+[debug] [2020-12-09T08:54:46.957Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Wed, 09 Dec 2020 08:54:47 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] 
+[info] === Deploying to 'indonesia-jelajah'...
+[info] 
+[info] i  deploying database, storage, hosting 
+[info] i  database: checking rules syntax... 
+[debug] [2020-12-09T08:54:47.066Z] >>> HTTP REQUEST PUT https://indonesia-jelajah.firebaseio.com/.settings/rules.json?dryRun=true  
+ {
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null"
+  }
+}
+[debug] [2020-12-09T10:13:49.714Z] Error: read ECONNRESET
+    at TLSWrap.onStreamRead (internal/stream_base_commons.js:207:27)
+[error] 
+[error] Error: Server Error. read ECONNRESET
+[debug] [2020-12-09T10:15:07.611Z] ----------------------------------------------------------------------
+[debug] [2020-12-09T10:15:07.615Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\LNSW\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2020-12-09T10:15:07.615Z] CLI Version:   8.13.1
+[debug] [2020-12-09T10:15:07.616Z] Platform:      win32
+[debug] [2020-12-09T10:15:07.616Z] Node Version:  v14.6.0
+[debug] [2020-12-09T10:15:07.619Z] Time:          Wed Dec 09 2020 17:15:07 GMT+0700 (Western Indonesia Time)
+[debug] [2020-12-09T10:15:07.619Z] ----------------------------------------------------------------------
+[debug] [2020-12-09T10:15:07.620Z] 
+[debug] [2020-12-09T10:15:07.637Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-12-09T10:15:07.639Z] > authorizing via signed-in user
+[debug] [2020-12-09T10:15:07.639Z] [iam] checking project indonesia-jelajah for permissions ["firebase.projects.get","firebasedatabase.instances.update","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]
+[debug] [2020-12-09T10:15:07.645Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2020-12-09T10:15:07.645Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-12-09T10:15:07.691Z] [iam] error while checking permissions, command may fail: FirebaseError: Authentication Error: Your credentials are no longer valid. Please run firebase login --reauth
+
+For CI servers and headless environments, generate a new token with firebase login:ci
+[debug] [2020-12-09T10:15:07.693Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2020-12-09T10:15:07.693Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-12-09T10:15:07.700Z] Authentication Error: Your credentials are no longer valid. Please run firebase login --reauth
+
+For CI servers and headless environments, generate a new token with firebase login:ci
+[debug] [2020-12-09T10:15:07.715Z] FirebaseError: Authentication Error: Your credentials are no longer valid. Please run firebase login --reauth
+
+For CI servers and headless environments, generate a new token with firebase login:ci
+    at Object.<anonymous> (C:\Users\LNSW\AppData\Roaming\npm\node_modules\firebase-tools\lib\auth.js:23:32)
+    at Module._compile (internal/modules/cjs/loader.js:1236:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1257:10)
+    at Module.load (internal/modules/cjs/loader.js:1085:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:950:14)
+    at Module.require (internal/modules/cjs/loader.js:1125:19)
+    at require (internal/modules/cjs/helpers.js:75:18)
+    at Object.<anonymous> (C:\Users\LNSW\AppData\Roaming\npm\node_modules\firebase-tools\lib\init\features\hosting\github.js:20:16)
+    at Module._compile (internal/modules/cjs/loader.js:1236:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1257:10)
+    at Module.load (internal/modules/cjs/loader.js:1085:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:950:14)
+    at Module.require (internal/modules/cjs/loader.js:1125:19)
+    at require (internal/modules/cjs/helpers.js:75:18)
+    at Object.<anonymous> (C:\Users\LNSW\AppData\Roaming\npm\node_modules\firebase-tools\lib\init\features\hosting\index.js:7:22)
+    at Module._compile (internal/modules/cjs/loader.js:1236:30)
+[error] 
+[error] Error: Failed to get Firebase project indonesia-jelajah. Please make sure the project exists and your account has permission to access it.
