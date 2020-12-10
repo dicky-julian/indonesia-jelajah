@@ -19,6 +19,8 @@
     <img width="310" height="175" src="https://github.com/dicky-julian/indonesia-jelajah/blob/master/src/assets/images/documentation/3.PNG?raw=true">
 </div>
 
+<br /><br />
+
 2. Setelah berhasil melakukan pendaftaran, anda harus melengkapi data profil terlebih dahulu yang terletak pada halaman profil. Untuk menuju halaman profil, pilih ikon/gambar profil pada kanan atas seperti gambar 4, lalu pilih profil.
 <div align="center">
 <img width="100" height="100" src="https://github.com/dicky-julian/indonesia-jelajah/blob/master/src/assets/images/documentation/4.PNG?raw=true">
@@ -31,12 +33,16 @@ Anda akan diarahkan ke dalam halaman profil yang berisikan berbagai form pengisi
   <img width="310" height="175" src="https://github.com/dicky-julian/indonesia-jelajah/blob/master/src/assets/images/documentation/9.PNG?raw=true">
 </div>
 
+<br /><br />
+
 3. Untuk menemukan berbagai destinasi wisata, pilih 'Destinasi' pada menu navigasi. Anda akan diarahkan kedalam halaman destinasi.
 <div align="center">
   <img width="310" height="175" src="https://github.com/dicky-julian/indonesia-jelajah/blob/master/src/assets/images/documentation/7.PNG?raw=true">
 </div>
 
-4. 3. Untuk menemukan berbagai artikel, pilih 'Artikel' pada menu navigasi. Anda akan diarahkan kedalam halaman artikel.
+<br /><br />
+
+4. Untuk menemukan berbagai artikel, pilih 'Artikel' pada menu navigasi. Anda akan diarahkan kedalam halaman artikel.
 <div align="center">
   <img width="310" height="175" src="https://github.com/dicky-julian/indonesia-jelajah/blob/master/src/assets/images/documentation/8.PNG?raw=true">
 </div>
@@ -44,4 +50,9 @@ Anda akan diarahkan ke dalam halaman profil yang berisikan berbagai form pengisi
 Selain dapat membaca artikel, anda juga dapat menambahkan artikel yang terletak pada halaman 'Tambah Artikel'.
 <div align="center">
   <img width="310" height="175" src="https://github.com/dicky-julian/indonesia-jelajah/blob/master/src/assets/images/documentation/10.PNG?raw=true">
+</div>
+
+5. Untuk menunjukkan atau melihat riwayat transaksi yang pernah anda lakukan, anda bisa melihatnya pada halaman profil, seperti gambar berikut :
+<div align="center">
+  <img width="310" height="175" src="https://github.com/dicky-julian/indonesia-jelajah/blob/master/src/assets/images/documentation/11.PNG?raw=true">
 </div>
