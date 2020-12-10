@@ -93,21 +93,26 @@ const Navbar = (props) => {
     setShowNotificationModal(false);
   }
 
-  const handleChangeProvince = async ({ label, value, key }) => {
-    setIsSelectLoading(true);
-    setProvinceError(false);
-    setSelectedProvince({ label, value });
+  const handleChangeProvince = async (province) => {
 
-    const listOfCity = [];
-    locationList[key].regency.map(({ id, name }) => {
-      listOfCity.push({
-        label: name,
-        value: id
+    if (province) {
+      const { label, value, key } = province;
+
+      setIsSelectLoading(true);
+      setProvinceError(false);
+      setSelectedProvince({ label, value });
+
+      const listOfCity = [];
+      locationList[key].regency.map(({ id, name }) => {
+        listOfCity.push({
+          label: name,
+          value: id
+        })
       })
-    })
 
-    setCityList(listOfCity);
-    setIsSelectLoading(false);
+      setCityList(listOfCity);
+      setIsSelectLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -155,7 +160,7 @@ const Navbar = (props) => {
     <nav className="navbar d-flex justify-content-center">
       <div className="wrapper d-flex align-items-center justify-content-between">
         <Link to="/">
-          <img src={require('../../../assets/images/logo.webp')} alt="Indonesia Jalajah" />
+          <img src={require(`../../../assets/images/logo-${isPrimaryNav ? 'dark' : 'light'}.png`)} alt="Indonesia Jalajah" className="nav-img" />
         </Link>
         <div>
           {listLink.map(({ path, name }, index) => (

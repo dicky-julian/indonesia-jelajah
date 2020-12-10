@@ -169,6 +169,9 @@ p {
 nav.navbar {
   padding: 0;
   > .wrapper {
+    .nav-img {
+      height: 40px;
+    }
     > :nth-child(1) {
       width: calc(50% - 150px);
     }
