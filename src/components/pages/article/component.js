@@ -33,7 +33,7 @@ const Article = (props) => {
 
                     {/* ARTICLE CREATOR */}
                     <div className="d-flex justify-content-end align-items-center flex-nowrap mt-3">
-                      <span className="text-capitalize">{user}</span>
+                      <span className="text-capitalize text-right">{user}</span>
                       <PersonOutline />
                     </div>
 
@@ -45,7 +45,7 @@ const Article = (props) => {
 
                   <div>
                     <img src={image} />
-                    <Link to="/artikel/id_artikel">
+                    <Link to={`/artikel/${uid}/${date}`}>
                       <h4 className="mt-3 mb-3">{title}</h4>
                     </Link>
                     <p className="font-weight-light">{subtitle ? subtitle.slice(0, 150) : ''} ...</p>

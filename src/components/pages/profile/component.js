@@ -125,6 +125,15 @@ const Profile = (props) => {
     setIsImageLoading(false);
   }
 
+
+  // HANDLE CHANGE TICKET FIELD
+  const handleChangeAddTicket = (e, key) => {
+    setAddTicketData({
+      ...addTicketData,
+      [key]: e.target.value
+    })
+  }
+
   // SUBMIT TICKET
   const handleSubmitAddTicket = async (e) => {
     e.preventDefault();
@@ -135,6 +144,9 @@ const Profile = (props) => {
         if (response.data) {
           let cheapestPrice = userAccount.cheapestPrice;
 
+          console.log(cheapestPrice, 'cheapest')
+          console.log(addTicketData.price, 'price');
+          console.log(addTicketData.price < cheapestPrice)
           if (!cheapestPrice || (addTicketData.price < cheapestPrice)) {
             const payload = {
               ...userAccount,
@@ -144,6 +156,8 @@ const Profile = (props) => {
             if (payload.destinationImages && payload.destinationImages.length > 3) {
               payload.verified = true;
             }
+            const newAccessToken = generateToken(payload);
+            setAuthToken(newAccessToken);
             createUser(payload, userAccount.uid);
           }
           const listOfTicket = [
@@ -156,18 +170,11 @@ const Profile = (props) => {
         }
       })
       .catch((e) => {
+        console.log(e);
         showNotification('Kesalahan', 'Terjadi Kesalahan ketika menambahkan tiket', 'danger');
       })
     setShowTicketModal(false);
     setIsLoading(false);
-  }
-
-  // HANDLE CHANGE TICKET FIELD
-  const handleChangeAddTicket = (e, key) => {
-    setAddTicketData({
-      ...addTicketData,
-      [key]: e.target.value
-    })
   }
 
   // SUBMIT DIGITAL MONEY

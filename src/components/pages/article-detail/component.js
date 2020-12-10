@@ -66,12 +66,15 @@ const ArticleDetail = (props) => {
 
                 <div className="d-flex justify-content-end align-items-center">
                   <div>
-                    <h6 className="mb-1">{articleData.user || ''}</h6>
+                    <h6 className="mb-1 text-capitalize">{articleData.user || ''}</h6>
                     <span>{moment(parseInt(id_artikel)).format('DD MMMM YYYY')}</span>
                   </div>
                   <img src="https://i.pinimg.com/736x/7b/5e/53/7b5e538ed41b48a45b135d8639599146.jpg" />
                 </div>
               </div>
+              <p className="text-secondary mt-3">
+                <i>{articleData.subtitle}</i>
+              </p>
               <p className="mt-4 mb-4 text-justify">
                 {articleData.content ?
                   <div className="article-detail-container" dangerouslySetInnerHTML={{ __html: articleData.content }}></div>

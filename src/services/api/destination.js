@@ -13,7 +13,7 @@ const addDestinationImage = (userAccount, files) => {
       const { uid } = userAccount;
 
       // filter file's size up to 3MB
-      if (file.size < 3000000) {
+      if (file && file.size < 3000000) {
         const reference = references.child(`destination/${uid}/${new Date().getTime()}`);
         const pathReference = reference.put(file);
 
@@ -88,6 +88,7 @@ const addDestinationTicket = (ticketData, uid) => {
       .then(() => {
         resolve(setResponse(200, ticketData));
       }, (error) => {
+        console.log(error, 'error')
         reject(setResponse(500));
       });
   });

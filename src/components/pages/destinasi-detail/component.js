@@ -293,38 +293,38 @@ const DestinasiDetail = (props) => {
                     </div>
 
                     <div className="d-flex justify-content-between align-items-center mt-3">
-                      <h6 className="mb-0">Fasilitas</h6>
+                      <h6 className="mb-0">Lokasi</h6>
                       <div className="d-flex align-items-center">
                         <Star className="text-warning" style={{ fontSize: "18px" }} />
                         <Star className="text-warning" style={{ fontSize: "18px" }} />
                         <Star className="text-warning" style={{ fontSize: "18px" }} />
                         <Star className="text-warning" style={{ fontSize: "18px" }} />
                         <Star className="text-warning" style={{ fontSize: "18px" }} />
-                        <span className="text-muted text-right" style={{ width: "30px" }}>4.1</span>
+                        <span className="text-muted text-right" style={{ width: "30px" }}>4.3</span>
                       </div>
                     </div>
 
                     <div className="d-flex justify-content-between align-items-center mt-3">
-                      <h6 className="mb-0">Fasilitas</h6>
+                      <h6 className="mb-0">Layanan</h6>
                       <div className="d-flex align-items-center">
                         <Star className="text-warning" style={{ fontSize: "18px" }} />
                         <Star className="text-warning" style={{ fontSize: "18px" }} />
                         <Star className="text-warning" style={{ fontSize: "18px" }} />
                         <Star className="text-warning" style={{ fontSize: "18px" }} />
                         <Star className="text-warning" style={{ fontSize: "18px" }} />
-                        <span className="text-muted text-right" style={{ width: "30px" }}>4.1</span>
+                        <span className="text-muted text-right" style={{ width: "30px" }}>4.5</span>
                       </div>
                     </div>
 
                     <div className="d-flex justify-content-between align-items-center mt-3">
-                      <h6 className="mb-0">Fasilitas</h6>
+                      <h6 className="mb-0">Kepuasan</h6>
                       <div className="d-flex align-items-center">
                         <Star className="text-warning" style={{ fontSize: "18px" }} />
                         <Star className="text-warning" style={{ fontSize: "18px" }} />
                         <Star className="text-warning" style={{ fontSize: "18px" }} />
                         <Star className="text-warning" style={{ fontSize: "18px" }} />
                         <Star className="text-warning" style={{ fontSize: "18px" }} />
-                        <span className="text-muted text-right" style={{ width: "30px" }}>4.1</span>
+                        <span className="text-muted text-right" style={{ width: "30px" }}>4.2</span>
                       </div>
                     </div>
                   </div>

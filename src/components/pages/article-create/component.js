@@ -120,9 +120,6 @@ const Editor = (props) => {
                     Ubah Gambar
                   <input type="file" className="position-absolute" onChange={(e) => handleChangeFile(e.target.files)} />
                   </button>
-                  <button className="btn btn-sm btn-danger">
-                    Hapus
-                </button>
                 </div>
               </div>
               :

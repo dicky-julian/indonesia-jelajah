@@ -201,27 +201,27 @@ const Navbar = (props) => {
                 onClose={() => setProfileMenuAnchor(null)}
                 className="mt-5"
               >
-                <MenuItem className="pt-2 pb-2" onClick={() => setProfileMenuAnchor(null)}>
-                  <Link to="/profile" className="d-flex text-black">
+                <Link to="/profile">
+                  <MenuItem className="d-flex text-black pt-2 pb-2" onClick={() => setProfileMenuAnchor(null)}>
                     <PermIdentityOutlined style={{ fontSize: '1.2rem' }} />
                     <span className="ml-2 mr-4">Profil</span>
-                  </Link>
-                </MenuItem>
-                <MenuItem className="pt-2 pb-2 mt-1 mb-1" onClick={() => setProfileMenuAnchor(null)}>
-                  <Link to="/article-create" className="d-flex text-black">
+                  </MenuItem>
+                </Link>
+                <Link to="/article-create">
+                  <MenuItem className="d-flex text-black pt-2 pb-2 mt-1 mb-1" onClick={() => setProfileMenuAnchor(null)}>
                     <CreateOutlined style={{ fontSize: '1.2rem' }} />
                     <span className="ml-2 mr-4">Tambah Artikel</span>
-                  </Link>
-                </MenuItem>
-                <MenuItem className="pt-2 pb-2" onClick={() => setProfileMenuAnchor(null)}>
-                  <div className="d-flex" onClick={() => {
-                    window.location.href = '/';
-                    handleSignOut();
-                  }}>
+                  </MenuItem>
+                </Link>
+                <div onClick={() => {
+                  window.location.href = '/';
+                  handleSignOut();
+                }}>
+                  <MenuItem className="d-flex pt-2 pb-2" onClick={() => setProfileMenuAnchor(null)}>
                     <ExitToAppOutlined style={{ fontSize: '1.2rem' }} />
                     <span className="ml-2 mr-4">Keluar</span>
-                  </div>
-                </MenuItem>
+                  </MenuItem>
+                </div>
               </Menu>
             </div>
             :
@@ -372,7 +372,7 @@ const Navbar = (props) => {
         }
       />
 
-    </nav>
+    </nav >
   )
 }
 
