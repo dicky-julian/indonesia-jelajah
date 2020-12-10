@@ -17,7 +17,7 @@ import { facilities } from '../../../services/dummy/destination';
 import moment from 'moment';
 
 const Profile = (props) => {
-  const { accessToken, setAuthToken, history, dataLocation } = props;
+  const { accessToken, setAuthToken, history, dataLocation, handleGetLocation } = props;
 
   const [userAccount, setUserAccount] = useState();
   const [ticketList, setTicketList] = useState(null);
@@ -26,7 +26,6 @@ const Profile = (props) => {
   // Form Input
   const [locationList, setLocationList] = useState();
   const [displayName, setDisplayName] = useState();
-  const [provinceList, setProvinceList] = useState();
   const [selectedProvince, setSelectedProvince] = useState(false);
   const [cityList, setCityList] = useState([]);
   const [selectedCity, setSelectedCity] = useState(false);
@@ -118,10 +117,6 @@ const Profile = (props) => {
       .then((response) => {
         if (response.data) {
           let cheapestPrice = userAccount.cheapestPrice;
-
-          console.log(cheapestPrice, 'cheapest')
-          console.log(addTicketData.price, 'price');
-          console.log(addTicketData.price < cheapestPrice)
           if (!cheapestPrice || (addTicketData.price < cheapestPrice)) {
             const payload = {
               ...userAccount,
@@ -145,7 +140,6 @@ const Profile = (props) => {
         }
       })
       .catch((e) => {
-        console.log(e);
         showNotification('Kesalahan', 'Terjadi Kesalahan ketika menambahkan tiket', 'danger');
       })
     setShowTicketModal(false);
@@ -205,7 +199,7 @@ const Profile = (props) => {
       });
       setLocationList(newLocationList);
     } else if (!dataLocation) {
-      console.log('kontol')
+      handleGetLocation();
     }
   }, [dataLocation])
 

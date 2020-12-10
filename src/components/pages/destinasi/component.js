@@ -29,8 +29,8 @@ const Destination = ({ handleGetLocation, dataLocation }) => {
           setDestinationList(listOfDestination);
         }
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
+        setDestinationList(null);
       })
   }
 
@@ -92,7 +92,6 @@ const Destination = ({ handleGetLocation, dataLocation }) => {
 
           setDestinationList(destinationResult);
         } else {
-          console.log(response)
           setDestinationList([]);
         }
       })

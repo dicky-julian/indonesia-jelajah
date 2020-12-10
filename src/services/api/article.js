@@ -64,8 +64,23 @@ const createArticle = (articleData, uid) => {
   })
 }
 
+const getArticleWithLimit = (limit) => {
+  return new Promise((resolve, reject) => {
+    fireDatabase.ref(reference)
+      .limitToLast(limit)
+      .once('value')
+      .then((response) => {
+        const articleData = response.val();
+        resolve(articleData);
+      }, (error) => {
+        reject(null);
+      })
+  })
+}
+
 export {
   getAllArticle,
   getArticleById,
-  createArticle
+  createArticle,
+  getArticleWithLimit
 }

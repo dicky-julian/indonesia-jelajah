@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { fireDatabase } from '../firebase';
 
 // const baseUrl = 'https://dev.farizdotid.com/api';

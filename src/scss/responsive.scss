@@ -585,9 +585,9 @@
   }
 
   .item-carousel {
-    height: 325px;
+    height: 350px;
     >.item-detail {
-      bottom: 85px;
+      bottom: 120px;
   }
   }
 
@@ -648,10 +648,4 @@
       }
     }
   }
-}
-
-@media screen and (max-width: 350px) {
-  .item-carousel {
-    height: 375px;
-}
 }

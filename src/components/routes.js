@@ -16,7 +16,6 @@ const Article = React.lazy(() => import('./pages/article'));
 const ArticleDetail = React.lazy(() => import('./pages/article-detail'));
 const ArticleCreator = React.lazy(() => import('./pages/article-create'));
 const Profile = React.lazy(() => import('./pages/profile'));
-const Cart = React.lazy(() => import('./pages/cart'));
 
 const AppRoute = () => {
   const { store, persistor } = storage;
@@ -43,7 +42,6 @@ const AppRoute = () => {
               <Route path="/" exact render={(props) => renderComponent(LandingPage, props)} />
               <Route path="/destinasi" exact render={(props) => renderComponent(Destinasi, props)} />
               <Route path="/destinasi/:id_destinasi" render={(props) => renderComponent(DestinasiDetail, props)} />
-              <Route path="/cart" exact render={(props) => renderComponent(Cart, props)} />
               <Route path="/profile" exact render={(props) => renderComponent(Profile, props)} />
               <Route path="/artikel" exact render={(props) => renderComponent(Article, props)} />
               <Route path="/artikel/:id_user/:id_artikel" render={(props) => renderComponent(ArticleDetail, props)} />

@@ -88,7 +88,6 @@ const addDestinationTicket = (ticketData, uid) => {
       .then(() => {
         resolve(setResponse(200, ticketData));
       }, (error) => {
-        console.log(error, 'error')
         reject(setResponse(500));
       });
   });
@@ -105,10 +104,25 @@ const getDestinationByKey = (key, value) => {
   })
 }
 
+const getDestinationWithLimit = (limit) => {
+  return new Promise((resolve, reject) => {
+    fireDatabase.ref(userReference)
+      .limitToLast(limit)
+      .once('value')
+      .then((response) => {
+        const destinationData = response.val();
+        resolve(destinationData);
+      }, (error) => {
+        reject(null);
+      })
+  })
+}
+
 export {
   getDestinationTicketByKey,
   getDestinationTicketbyUid,
   getDestinationByKey,
   addDestinationImage,
-  addDestinationTicket
+  addDestinationTicket,
+  getDestinationWithLimit
 }

@@ -142,7 +142,6 @@ const DestinasiDetail = (props) => {
   useEffect(() => {
     if (accessToken) {
       const tokenData = decodeToken(accessToken);
-      console.log(tokenData);
       setUserAccount(tokenData);
     } else {
       setUserAccount(null);

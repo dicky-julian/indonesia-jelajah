@@ -15,7 +15,6 @@ const ArticleDetail = (props) => {
     if (id_user && id_artikel) {
       getArticleById(id_user, id_artikel)
         .then(({ data }) => {
-          console.log(data);
           if (data) {
             setArticleData(data);
           } else {
@@ -23,7 +22,6 @@ const ArticleDetail = (props) => {
           }
         })
         .catch((error) => {
-          console.log(error)
           setArticleData(null);
         })
     }
