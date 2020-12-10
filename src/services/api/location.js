@@ -1,34 +1,23 @@
 import axios from 'axios';
-const https = require('https');
+import { fireDatabase } from '../firebase';
 
 // const baseUrl = 'https://dev.farizdotid.com/api';
 const baseUrl = 'http://www.emsifa.com/api-wilayah-indonesia/api';
+const reference = 'location';
 
-const getAllProvince = () => {
+const getDataLocation = () => {
   return new Promise((resolve, reject) => {
-    axios(`${baseUrl}/provinces.json`)
+    fireDatabase.ref(reference).once('value')
       .then((response) => {
-        resolve(response);
+        const locationData = response.val();
+        resolve(locationData);
       })
-      .catch((error) => {
-        reject(error);
-      });
-  });
-}
-
-const getCityByProvince = (id_provinsi) => {
-  return new Promise((resolve, reject) => {
-    axios(`${baseUrl}/regencies/${id_provinsi}.json`)
-      .then((response) => {
-        resolve(response);
+      .catch(() => {
+        reject(null);
       })
-      .catch((error) => {
-        reject(error);
-      })
-  });
+  })
 }
 
 export {
-  getAllProvince,
-  getCityByProvince
+  getDataLocation
 }

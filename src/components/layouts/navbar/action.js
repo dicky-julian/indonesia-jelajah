@@ -1,7 +1,7 @@
 import { loginWithGoogle } from '../../../services/api/sso';
-import { getAllProvince } from '../../../services/api/location';
+import { getDataLocation } from '../../../services/api/location';
 import { createUser } from '../../../services/api/user';
-import { SET_AUTH_TOKEN, SET_SHOW_FORM_REGISTER, SET_SIGN_OUT, SET_ALL_PROVINCE, SET_SHOW_NOTIFICATION } from '../../../helpers/actionTypes';
+import { SET_AUTH_TOKEN, SET_SHOW_FORM_REGISTER, SET_SIGN_OUT, SET_LOCATION } from '../../../helpers/actionTypes';
 import { generateToken } from '../../../helpers/jwt';
 import { showNotification } from '../../layouts/base/notification';
 
@@ -41,22 +41,20 @@ const handleRegister = (userData) => async (dispatch) => {
     })
 }
 
-
-const handleGetAllProvince = () => async (dispatch) => {
-  await getAllProvince()
+const handleGetLocation = () => async (dispatch) => {
+  await getDataLocation()
     .then((response) => {
-      const { data } = response;
-
-      if (data) {
-        dispatch(setAllProvince(data));
-      } else {
-        dispatch(setAllProvince());
-      }
+      dispatch(setDataLocation(response))
     })
-    .catch((error) => {
-      dispatch(setAllProvince());
+    .catch(() => {
+      dispatch(setDataLocation(null));
     })
 }
+
+const setDataLocation = (locationData) => ({
+  type: SET_LOCATION,
+  payload: locationData
+})
 
 const handleSignOut = () => {
   return {
@@ -82,19 +80,10 @@ const setShowFormRegistration = (userData) => {
   }
 }
 
-const setAllProvince = (provinceData) => {
-  return {
-    type: SET_ALL_PROVINCE,
-    payload: {
-      province: provinceData
-    }
-  }
-}
-
 export {
   handleLogin,
   handleRegister,
   handleSignOut,
-  handleGetAllProvince,
+  handleGetLocation,
   setAuthToken
 }

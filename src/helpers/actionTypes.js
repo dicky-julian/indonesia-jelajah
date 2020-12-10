@@ -5,3 +5,4 @@ export const SET_ALL_PROVINCE = 'SET_ALL_PROVINCE';
 export const SET_SIGN_OUT = 'SET_SIGN_OUT';
 export const SET_ARTICLE = 'SET_ARTICLE';
 export const SET_ARTICLE_NOTE = 'SET_ARTICLE_NOTE';
+export const SET_LOCATION = 'SET_LOCATION';

@@ -3,42 +3,20 @@ import Select from 'react-select';
 import ProductList from '../../layouts/base/product-list';
 import { getUserByKey } from '../../../services/api/user';
 import { getDestinationByKey } from '../../../services/api/destination';
-import { getCityByProvince } from '../../../services/api/location';
 import { SearchOutlined } from '@material-ui/icons';
 import { Spinner, FullSpinner } from '../../layouts/base/spinner';
 import { HelpOutlineOutlined } from '@material-ui/icons';
 
-const Destination = ({ province }) => {
+const Destination = ({ handleGetLocation, dataLocation }) => {
   const [isSelectLoading, setIsSelectLoading] = useState(false);
   const [isSearchLoading, setIsSearchLoading] = useState(false);
-  const [provinceList, setProvinceList] = useState();
+  const [locationList, setLocationList] = useState();
   const [selectedProvince, setSelectedProvince] = useState();
   const [cityList, setCityList] = useState([]);
   const [selectedCity, setSelectedCity] = useState();
   const [destinationList, setDestinationList] = useState(null);
   const [destinationName, setDestinationName] = useState(null);
   const [destinationPrice, setDestinationPrice] = useState(null);
-
-  const handleGetCityByProvince = async () => {
-    const { value } = selectedProvince;
-
-    await getCityByProvince(value)
-      .then((response) => {
-        if (response.data) {
-          const dataKotaKabupaten = response.data;
-          const newDataKotaKabupaten = [];
-          dataKotaKabupaten.map((kotaKabupaten) => {
-            const { id, name } = kotaKabupaten;
-            return newDataKotaKabupaten.push({
-              label: name,
-              value: id
-            });
-          });
-          setCityList(newDataKotaKabupaten);
-        }
-      });
-    setIsSelectLoading();
-  }
 
   const handleGetAllDestination = async () => {
     await getUserByKey('verified', true)
@@ -56,12 +34,32 @@ const Destination = ({ province }) => {
       })
   }
 
+  const handleChangeProvince = async (province) => {
+
+    if (province) {
+      const { label, value, key } = province;
+
+      setIsSelectLoading(true);
+      setSelectedProvince({ label, value });
+
+      const listOfCity = [];
+      locationList[key].regency.map(({ id, name }) => {
+        listOfCity.push({
+          label: name,
+          value: id
+        })
+      })
+
+      setCityList(listOfCity);
+      setIsSelectLoading(false);
+    }
+  }
+
   // SUBMIT SEARCH DESTINATION
   const handleFindDestination = async () => {
     setIsSearchLoading(true);
     await getDestinationByKey('displayName', destinationName)
       .then((response) => {
-        console.log(response);
         if (response) {
           let destinationResult = [];
           for (let destinationIndex in response) {
@@ -106,24 +104,21 @@ const Destination = ({ province }) => {
   }, [])
 
   useEffect(() => {
-    if (selectedProvince) {
-      setIsSelectLoading(true);
-      handleGetCityByProvince();
-    }
-  }, [selectedProvince]);
-
-  useEffect(() => {
-    if (!provinceList && province) {
-      const newProvinceList = [];
-      province.map(({ id, name }) => {
-        return newProvinceList.push({
+    if (!locationList && dataLocation) {
+      const newLocationList = [];
+      dataLocation.map(({ id, name, regency }, index) => {
+        newLocationList.push({
           label: name,
-          value: id
+          value: id,
+          regency,
+          key: index
         });
       });
-      setProvinceList(newProvinceList);
+      setLocationList(newLocationList);
+    } else if (!dataLocation) {
+      handleGetLocation();
     }
-  }, [provinceList, province]);
+  }, [dataLocation]);
 
   return (
     <div>
@@ -156,7 +151,7 @@ const Destination = ({ province }) => {
                 }
               </div>
               <div className="preference-bar">
-                {provinceList ?
+                {locationList ?
                   <>
                     <h4 className="font-playfair">Temukan Destinasi</h4>
                     <hr />
@@ -180,20 +175,19 @@ const Destination = ({ province }) => {
                     <Select
                       className="custom-react-select"
                       classNamePrefix="select"
-                      defaultValue={provinceList[0]}
                       isDisabled={isSelectLoading}
                       isLoading={isSelectLoading}
                       isClearable={true}
                       isSearchable={true}
-                      options={provinceList}
-                      onChange={(province) => setSelectedProvince(province)}
+                      options={locationList}
+                      onChange={(province) => handleChangeProvince(province)}
                     />
 
                     <p className="mt-3 mb-2 text-secondary">Kota/Kabupaten</p>
                     <Select
                       className="custom-react-select"
                       classNamePrefix="select"
-                      isDisabled={isSelectLoading}
+                      isDisabled={isSelectLoading || !selectedProvince}
                       isLoading={isSelectLoading}
                       isClearable={true}
                       isSearchable={true}

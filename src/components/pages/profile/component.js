@@ -7,7 +7,6 @@ import { Check, PlayCircleFilledOutlined, PersonOutline, ConfirmationNumberOutli
 import QrCode from '../../layouts/base/qrcode';
 import Modal from '../../layouts/base/modal';
 import { decodeToken } from '../../../helpers/jwt';
-import { getCityByProvince } from '../../../services/api/location';
 import { createUser } from '../../../services/api/user';
 import { getDestinationTicketbyUid } from '../../../services/api/destination';
 import { addDestinationImage, addDestinationTicket } from '../../../services/api/destination';
@@ -18,13 +17,14 @@ import { facilities } from '../../../services/dummy/destination';
 import moment from 'moment';
 
 const Profile = (props) => {
-  const { accessToken, province, setAuthToken, handleGetAllProvince, history } = props;
+  const { accessToken, setAuthToken, history, dataLocation } = props;
 
   const [userAccount, setUserAccount] = useState();
   const [ticketList, setTicketList] = useState(null);
   const [addTicketData, setAddTicketData] = useState({});
 
   // Form Input
+  const [locationList, setLocationList] = useState();
   const [displayName, setDisplayName] = useState();
   const [provinceList, setProvinceList] = useState();
   const [selectedProvince, setSelectedProvince] = useState(false);
@@ -33,7 +33,7 @@ const Profile = (props) => {
   const [fullAdress, setFullAddress] = useState();
   const [facilitieLists, setFacilitieLists] = useState([]);
   const [destinationDescription, setDestinationDescription] = useState('');
-  const [moneyBalance, setMonetBalance] = useState(null);
+  const [moneyBalance, setMoneyBalanca] = useState(null);
 
   // Modal Status
   const [showTicketModal, setShowTicketModal] = useState(false);
@@ -53,31 +53,6 @@ const Profile = (props) => {
     : false;
 
   const isDisableDestinationButton = !destinationDescription || !facilitieLists || (facilitieLists && !facilitieLists.length > 2) ? true : false;
-
-  // PROVIDE CITY AND PROVINCE
-  const handleGetCityByProvince = async () => {
-    if (selectedProvince) {
-      const { value } = selectedProvince;
-
-      await getCityByProvince(value)
-        .then((response) => {
-          if (response.data) {
-            const dataKotaKabupaten = response.data;
-            const newDataKotaKabupaten = [];
-            dataKotaKabupaten.map((kotaKabupaten) => {
-              const { id, name } = kotaKabupaten;
-              return newDataKotaKabupaten.push({
-                label: name,
-                value: id
-              });
-            });
-
-            setCityList(newDataKotaKabupaten);
-          }
-        });
-      setIsSelectLoading(false);
-    }
-  }
 
   // SUBMIT PROFILE
   const handleProfileSubmit = (actionRole) => {
@@ -200,6 +175,40 @@ const Profile = (props) => {
     setShowMoneyModal(false);
   }
 
+  const handleChangeProvince = async ({ label, value, key }) => {
+    setIsSelectLoading(true);
+    setSelectedCity(null);
+    setSelectedProvince({ label, value });
+
+    const listOfCity = [];
+    locationList[key].regency.map(({ id, name }) => {
+      listOfCity.push({
+        label: name,
+        value: id
+      })
+    })
+
+    setCityList(listOfCity);
+    setIsSelectLoading(false);
+  }
+
+  useEffect(() => {
+    if (!locationList && dataLocation) {
+      const newLocationList = [];
+      dataLocation.map(({ id, name, regency }, index) => {
+        newLocationList.push({
+          label: name,
+          value: id,
+          regency,
+          key: index
+        });
+      });
+      setLocationList(newLocationList);
+    } else if (!dataLocation) {
+      console.log('kontol')
+    }
+  }, [dataLocation])
+
   // SET USER ACCOUNT
   useEffect(() => {
     if (accessToken) {
@@ -262,35 +271,10 @@ const Profile = (props) => {
     }
   }, [userAccount])
 
-  // GET PROVINCE LIST
-  useEffect(() => {
-    if (!provinceList && province) {
-      const newProvinceList = [];
-      province.map(({ id, name }) => {
-        return newProvinceList.push({
-          label: name,
-          value: id
-        });
-      });
-
-      setProvinceList(newProvinceList);
-    } else if (!province) {
-      handleGetAllProvince()
-    }
-  }, [provinceList, province]);
-
-  // GET CITY LIST WHEN PROVINCE UPDATED
-  useEffect(() => {
-    if (selectedProvince) {
-      setIsSelectLoading(true);
-      handleGetCityByProvince();
-    }
-  }, [selectedProvince])
-
   return (
     <div>
       <main className="container-destination-detail d-flex flex-column align-items-center bg-white">
-        {accessToken && userAccount && provinceList && cityList && selectedProvince !== false && selectedCity !== false && ticketList ?
+        {accessToken && userAccount && locationList && cityList && selectedProvince !== false && selectedCity !== false && ticketList ?
           <div className="d-flex cart-container">
             <div className="preference-bar">
               <h4 className="text-capitalize">{userAccount.displayName}</h4>
@@ -373,11 +357,8 @@ const Profile = (props) => {
                       isLoading={isSelectLoading}
                       isClearable={true}
                       isSearchable={true}
-                      options={provinceList}
-                      onChange={(province) => {
-                        setSelectedProvince(province);
-                        setSelectedCity(null);
-                      }}
+                      options={locationList}
+                      onChange={(province) => handleChangeProvince(province)}
                     />
 
                     <p className="mt-3 mb-2 text-secondary">Kota/Kabupaten</p>
@@ -584,7 +565,7 @@ const Profile = (props) => {
           <p className="mt-3 mb-2 text-secondary">Nominal Penambahan</p>
           <input
             className="custom-react-input w-100"
-            onChange={(e) => setMonetBalance(e.target.value)}
+            onChange={(e) => setMoneyBalanca(e.target.value)}
             type="number"
             placeholder="Rp. "
             required

@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Drawer, Menu, MenuItem, Snackbar, IconButton, MobileStepper } from '@material-ui/core';
-import { CreateOutlined, AccountCircleOutlined, PermIdentityOutlined, ExitToAppOutlined, Close, SignalCellularNullSharp } from '@material-ui/icons';
+import { CreateOutlined, AccountCircleOutlined, PermIdentityOutlined, ExitToAppOutlined, Close } from '@material-ui/icons';
 import Select from 'react-select';
-import { getCityByProvince } from '../../../services/api/location';
 import Modal from '../../layouts/base/modal';
 import { randomAlphaNumeric } from '../../../helpers/random';
 
 const Navbar = (props) => {
-  const { handleLogin, handleRegister, handleGetAllProvince, province, accessToken, showFormRegister, showNotification, handleSignOut } = props;
+  const { handleLogin, handleRegister, accessToken, showFormRegister, showNotification, handleSignOut, handleGetLocation, dataLocation } = props;
 
   const [showDrawer, setShowDrawer] = useState(false);
   const [profileMenuAnchor, setProfileMenuAnchor] = useState(null);
@@ -19,7 +18,7 @@ const Navbar = (props) => {
   const [isPrimaryNav, setIsPrimaryNav] = useState();
   const [isSelectLoading, setIsSelectLoading] = useState();
 
-  const [provinceList, setProvinceList] = useState();
+  const [locationList, setLocationList] = useState();
   const [selectedProvince, setSelectedProvince] = useState();
   const [cityList, setCityList] = useState([]);
   const [selectedCity, setSelectedCity] = useState();
@@ -50,27 +49,6 @@ const Navbar = (props) => {
 
   const handleToogleDrawer = () => {
     setShowDrawer(true);
-  }
-
-  const handleGetCityByProvince = async () => {
-    const { value } = selectedProvince;
-
-    await getCityByProvince(value)
-      .then((response) => {
-        if (response.data) {
-          const dataKotaKabupaten = response.data;
-          const newDataKotaKabupaten = [];
-          dataKotaKabupaten.map((kotaKabupaten) => {
-            const { id, name } = kotaKabupaten;
-            return newDataKotaKabupaten.push({
-              label: name,
-              value: id
-            });
-          });
-          setCityList(newDataKotaKabupaten);
-        }
-      });
-    setIsSelectLoading();
   }
 
   const handleSubmitRegister = (payload) => {
@@ -115,6 +93,23 @@ const Navbar = (props) => {
     setShowNotificationModal(false);
   }
 
+  const handleChangeProvince = async ({ label, value, key }) => {
+    setIsSelectLoading(true);
+    setProvinceError(false);
+    setSelectedProvince({ label, value });
+
+    const listOfCity = [];
+    locationList[key].regency.map(({ id, name }) => {
+      listOfCity.push({
+        label: name,
+        value: id
+      })
+    })
+
+    setCityList(listOfCity);
+    setIsSelectLoading(false);
+  }
+
   useEffect(() => {
     setShowRegistrationModal(showFormRegister ? true : false);
 
@@ -140,27 +135,21 @@ const Navbar = (props) => {
   }, [location, listLink]);
 
   useEffect(() => {
-    if (selectedProvince) {
-      setIsSelectLoading(true);
-      handleGetCityByProvince();
-    }
-  }, [selectedProvince]);
-
-  useEffect(() => {
-    if (!provinceList && province) {
-      const newProvinceList = [];
-      province.map(({ id, name }) => {
-        return newProvinceList.push({
+    if (!locationList && dataLocation) {
+      const newLocationList = [];
+      dataLocation.map(({ id, name, regency }, index) => {
+        newLocationList.push({
           label: name,
-          value: id
+          value: id,
+          regency,
+          key: index
         });
       });
-
-      setProvinceList(newProvinceList);
-    } else if (!province) {
-      handleGetAllProvince()
+      setLocationList(newLocationList);
+    } else if (!dataLocation) {
+      handleGetLocation();
     }
-  }, [provinceList, province]);
+  }, [dataLocation]);
 
   return (
     <nav className="navbar d-flex justify-content-center">
@@ -263,10 +252,10 @@ const Navbar = (props) => {
         showModal={showRegistrationModal}
         setShowModal={setShowRegistrationModal}
       >
-        <div className="preference-bar position-static">
+        <div className="preference-bar position-static mb-0">
           <h4 className="font-playfair">Form Pendaftaran</h4>
           <hr />
-          {provinceList ?
+          {locationList ?
             <>
               {registrationModalStatus === 0 && (
                 <>
@@ -294,11 +283,8 @@ const Navbar = (props) => {
                     isLoading={isSelectLoading}
                     isClearable={true}
                     isSearchable={true}
-                    options={provinceList}
-                    onChange={(province) => {
-                      setProvinceError(false);
-                      setSelectedProvince(province);
-                    }}
+                    options={locationList}
+                    onChange={(province) => handleChangeProvince(province)}
                   />
                   {provinceError && <p className="text-danger">Provinsi harus diisi!</p>}
 
