@@ -52,6 +52,8 @@ Selain dapat membaca artikel, anda juga dapat menambahkan artikel yang terletak 
   <img width="310" height="175" src="https://github.com/dicky-julian/indonesia-jelajah/blob/master/src/assets/images/documentation/10.PNG?raw=true">
 </div>
 
+<br /><br />
+
 5. Untuk menunjukkan atau melihat riwayat transaksi yang pernah anda lakukan, anda bisa melihatnya pada halaman profil, seperti gambar berikut :
 <div align="center">
   <img width="310" height="175" src="https://github.com/dicky-julian/indonesia-jelajah/blob/master/src/assets/images/documentation/11.PNG?raw=true">
